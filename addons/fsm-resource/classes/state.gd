@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-class_name State
+class_name State, "../icons/state.svg"
 
 # GRAPH
 var position:= Vector2()

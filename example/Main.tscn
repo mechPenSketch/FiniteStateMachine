@@ -1,3 +1,60 @@
-[gd_scene format=2]
+[gd_scene load_steps=6 format=2]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource path="res://example/trafficlights.png" type="Texture" id=1]
+[ext_resource path="res://addons/fsm-resource/classes/fsm.gd" type="Script" id=2]
+[ext_resource path="res://addons/fsm-resource/classes/state.gd" type="Script" id=3]
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 3 )
+transition_indexes = [  ]
+
+[sub_resource type="Theme" id=1]
+CheckButton/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
+CheckButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+CheckButton/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
+CheckButton/colors/font_color_hover_pressed = Color( 1, 1, 1, 1 )
+CheckButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+CheckButton/constants/check_vadjust = 0
+CheckButton/constants/hseparation = 4
+CheckButton/fonts/font = null
+CheckButton/icons/off = null
+CheckButton/icons/off_disabled = null
+CheckButton/icons/on = null
+CheckButton/icons/on_disabled = null
+CheckButton/styles/disabled = null
+CheckButton/styles/focus = null
+CheckButton/styles/hover = null
+CheckButton/styles/hover_pressed = null
+CheckButton/styles/normal = null
+CheckButton/styles/pressed = null
+
+[node name="Node2D" type="Node"]
+
+[node name="TrafficLight" type="Sprite" parent="."]
+position = Vector2( 24, 36 )
+texture = ExtResource( 1 )
+vframes = 2
+hframes = 2
+
+[node name="FSM" type="Node" parent="TrafficLight"]
+script = ExtResource( 2 )
+states = [ SubResource( 2 ), null, null ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TrafficLight"]
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( 67.5287, 16.4402 )
+
+[node name="CheckButton" type="CheckButton" parent="Node2D"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -38.0
+margin_top = -20.0
+margin_right = 38.0
+margin_bottom = 20.0
+theme = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

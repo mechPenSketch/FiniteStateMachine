@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-class_name Transition
+class_name Transition, "../icons/transition.svg"
 
 var position:= Vector2()
 

@@ -26,14 +26,26 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "FSM": "",
-"State": "",
-"Transition": ""
+"State": "res://addons/fsm-resource/icons/state.svg",
+"Transition": "res://addons/fsm-resource/icons/transition.svg"
 }
 
 [application]
 
 config/name="Finite State Machine"
+run/main_scene="res://example/Main.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=96
+window/size/height=72
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "fsm-resource" )
 
 [rendering]
 
