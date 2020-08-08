@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/trafficlights.png-b3e4066191bf1f7140a82d9729528bbf.stex"
+path="res://.import/check_rd.png-99dfbc7c6eccdaee0ef582f273a0b126.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://example/trafficlights.png"
-dest_files=[ "res://.import/trafficlights.png-b3e4066191bf1f7140a82d9729528bbf.stex" ]
+source_file="res://example/check_rd.png"
+dest_files=[ "res://.import/check_rd.png-99dfbc7c6eccdaee0ef582f273a0b126.stex" ]
 
 [params]
 

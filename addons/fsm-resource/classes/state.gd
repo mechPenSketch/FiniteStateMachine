@@ -3,6 +3,8 @@ extends Resource
 
 class_name State, "../icons/state.svg"
 
+export(String) var name
+
 # GRAPH
 var position:= Vector2()
 
