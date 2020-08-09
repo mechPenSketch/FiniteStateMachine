@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://example/trafficlights.png" type="Texture" id=1]
 [ext_resource path="res://addons/fsm-resource/classes/fsm.gd" type="Script" id=2]
@@ -7,13 +7,63 @@
 [ext_resource path="res://example/check_r.png" type="Texture" id=5]
 [ext_resource path="res://example/check_g.png" type="Texture" id=6]
 [ext_resource path="res://example/check_gd.png" type="Texture" id=7]
+[ext_resource path="res://example/stopwatch-base.png" type="Texture" id=8]
+[ext_resource path="res://example/stopwatch-timer.png" type="Texture" id=9]
+[ext_resource path="res://example/stopwatch-number.png" type="Texture" id=10]
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
 script = ExtResource( 3 )
+name = ""
 transition_indexes = [  ]
 
-[sub_resource type="Theme" id=2]
+[sub_resource type="Animation" id=4]
+resource_name = "Go"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Stop"
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Wait"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+
+[sub_resource type="Theme" id=3]
 CheckButton/colors/font_color = Color( 1, 1, 1, 1 )
 CheckButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 CheckButton/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -40,15 +90,19 @@ position = Vector2( 24, 36 )
 texture = ExtResource( 1 )
 vframes = 2
 hframes = 2
+frame = 1
 
 [node name="FSM" type="Node" parent="TrafficLight"]
 script = ExtResource( 2 )
 states = [ SubResource( 1 ), null, null ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TrafficLight"]
+anims/Go = SubResource( 4 )
+anims/Stop = SubResource( 2 )
+anims/Wait = SubResource( 5 )
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 67.5287, 16.4402 )
+position = Vector2( 68, 16.44 )
 
 [node name="CheckButton" type="CheckButton" parent="Node2D"]
 anchor_left = 0.5
@@ -59,7 +113,7 @@ margin_left = -22.0
 margin_top = -20.0
 margin_right = 22.0
 margin_bottom = 20.0
-theme = SubResource( 2 )
+theme = SubResource( 3 )
 custom_icons/off = ExtResource( 5 )
 custom_icons/on_disabled = ExtResource( 7 )
 custom_icons/on = ExtResource( 6 )
@@ -67,3 +121,21 @@ custom_icons/off_disabled = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Stropwatch" type="Sprite" parent="."]
+position = Vector2( 68, 48 )
+texture = ExtResource( 8 )
+
+[node name="Number" type="Sprite" parent="Stropwatch"]
+position = Vector2( 0, 3 )
+texture = ExtResource( 10 )
+vframes = 2
+hframes = 3
+
+[node name="Seconds" type="Sprite" parent="Stropwatch"]
+position = Vector2( 0, 3 )
+texture = ExtResource( 9 )
+vframes = 3
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Stropwatch"]
