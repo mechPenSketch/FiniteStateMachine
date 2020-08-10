@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://example/trafficlights.png" type="Texture" id=1]
 [ext_resource path="res://addons/fsm-resource/classes/fsm.gd" type="Script" id=2]
@@ -17,7 +17,7 @@ script = ExtResource( 3 )
 name = ""
 transition_indexes = [  ]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "Go"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -32,8 +32,7 @@ tracks/0/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Stop"
+[sub_resource type="Animation" id=3]
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -48,7 +47,7 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 resource_name = "Wait"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -63,7 +62,7 @@ tracks/0/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Theme" id=3]
+[sub_resource type="Theme" id=5]
 CheckButton/colors/font_color = Color( 1, 1, 1, 1 )
 CheckButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 CheckButton/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -83,6 +82,74 @@ CheckButton/styles/hover_pressed = null
 CheckButton/styles/normal = null
 CheckButton/styles/pressed = null
 
+[sub_resource type="Animation" id=6]
+resource_name = "Countdown"
+length = 5.0
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/path = NodePath("Number:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Seconds:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667, 1, 1.08333, 1.16667, 1.25, 1.33333, 1.41667, 1.5, 1.58333, 1.66667, 1.75, 1.83333, 1.91667, 2, 2.08333, 2.16667, 2.25, 2.33333, 2.41667, 2.5, 2.58333, 2.66667, 2.75, 2.83333, 2.91667, 3, 3.08333, 3.16667, 3.25, 3.33333, 3.41667, 3.5, 3.58333, 3.66667, 3.75, 3.83333, 3.91667, 4, 4.08333, 4.16667, 4.25, 4.33333, 4.41667, 4.5, 4.58333, 4.66667, 4.75, 4.83333, 4.91667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Seconds:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Number:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Seconds:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
 [node name="Node2D" type="Node"]
 
 [node name="TrafficLight" type="Sprite" parent="."]
@@ -97,9 +164,9 @@ script = ExtResource( 2 )
 states = [ SubResource( 1 ), null, null ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TrafficLight"]
-anims/Go = SubResource( 4 )
-anims/Stop = SubResource( 2 )
-anims/Wait = SubResource( 5 )
+anims/Go = SubResource( 2 )
+anims/Stop = SubResource( 3 )
+anims/Wait = SubResource( 4 )
 
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2( 68, 16.44 )
@@ -113,7 +180,7 @@ margin_left = -22.0
 margin_top = -20.0
 margin_right = 22.0
 margin_bottom = 20.0
-theme = SubResource( 3 )
+theme = SubResource( 5 )
 custom_icons/off = ExtResource( 5 )
 custom_icons/on_disabled = ExtResource( 7 )
 custom_icons/on = ExtResource( 6 )
@@ -139,3 +206,5 @@ vframes = 3
 hframes = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Stropwatch"]
+anims/Countdown = SubResource( 6 )
+anims/Idle = SubResource( 7 )
