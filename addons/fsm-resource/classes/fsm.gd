@@ -1,7 +1,7 @@
 tool
 extends Node
 
-class_name FSM
+class_name FSMr
 
 export(Array, Resource) var states
 export(Array, Resource) var transitions

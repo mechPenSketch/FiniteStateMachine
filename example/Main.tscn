@@ -1,8 +1,8 @@
 [gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://example/trafficlights.png" type="Texture" id=1]
-[ext_resource path="res://addons/fsm-resource/classes/fsm.gd" type="Script" id=2]
-[ext_resource path="res://addons/fsm-resource/classes/state.gd" type="Script" id=3]
+[ext_resource path="res://addons/fsm-node/classes/fsm.gd" type="Script" id=2]
+[ext_resource path="res://addons/fsm-node/classes/state.gd" type="Script" id=3]
 [ext_resource path="res://example/check_rd.png" type="Texture" id=4]
 [ext_resource path="res://example/check_r.png" type="Texture" id=5]
 [ext_resource path="res://example/check_g.png" type="Texture" id=6]
@@ -10,15 +10,9 @@
 [ext_resource path="res://example/stopwatch-base.png" type="Texture" id=8]
 [ext_resource path="res://example/stopwatch-timer.png" type="Texture" id=9]
 [ext_resource path="res://example/stopwatch-number.png" type="Texture" id=10]
+[ext_resource path="res://addons/fsm-node/classes/transition.gd" type="Script" id=11]
 
-[sub_resource type="Resource" id=1]
-resource_local_to_scene = true
-script = ExtResource( 3 )
-name = ""
-transition_indexes = [  ]
-
-[sub_resource type="Animation" id=2]
-resource_name = "Go"
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -32,7 +26,7 @@ tracks/0/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -47,8 +41,7 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "Wait"
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -62,7 +55,7 @@ tracks/0/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Theme" id=5]
+[sub_resource type="Theme" id=6]
 CheckButton/colors/font_color = Color( 1, 1, 1, 1 )
 CheckButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 CheckButton/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -82,8 +75,7 @@ CheckButton/styles/hover_pressed = null
 CheckButton/styles/normal = null
 CheckButton/styles/pressed = null
 
-[sub_resource type="Animation" id=6]
-resource_name = "Countdown"
+[sub_resource type="Animation" id=7]
 length = 5.0
 step = 0.0416667
 tracks/0/type = "value"
@@ -123,8 +115,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "Idle"
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Number:frame")
 tracks/0/interp = 1
@@ -157,16 +148,33 @@ position = Vector2( 24, 36 )
 texture = ExtResource( 1 )
 vframes = 2
 hframes = 2
-frame = 1
+frame = 3
 
 [node name="FSM" type="Node" parent="TrafficLight"]
 script = ExtResource( 2 )
-states = [ SubResource( 1 ), null, null ]
+
+[node name="Stop" type="Node" parent="TrafficLight/FSM"]
+script = ExtResource( 3 )
+
+[node name="Wait" type="Node" parent="TrafficLight/FSM"]
+script = ExtResource( 3 )
+
+[node name="Go" type="Node" parent="TrafficLight/FSM"]
+script = ExtResource( 3 )
+
+[node name="ToGo" type="Node" parent="TrafficLight/FSM"]
+script = ExtResource( 11 )
+
+[node name="ToWait" type="Node" parent="TrafficLight/FSM"]
+script = ExtResource( 11 )
+
+[node name="ToStop" type="Node" parent="TrafficLight/FSM"]
+script = ExtResource( 11 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TrafficLight"]
-anims/Go = SubResource( 2 )
-anims/Stop = SubResource( 3 )
-anims/Wait = SubResource( 4 )
+anims/Go = SubResource( 3 )
+anims/Stop = SubResource( 4 )
+anims/Wait = SubResource( 5 )
 
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2( 68, 16.44 )
@@ -180,7 +188,7 @@ margin_left = -22.0
 margin_top = -20.0
 margin_right = 22.0
 margin_bottom = 20.0
-theme = SubResource( 5 )
+theme = SubResource( 6 )
 custom_icons/off = ExtResource( 5 )
 custom_icons/on_disabled = ExtResource( 7 )
 custom_icons/on = ExtResource( 6 )
@@ -198,13 +206,15 @@ position = Vector2( 0, 3 )
 texture = ExtResource( 10 )
 vframes = 2
 hframes = 3
+frame = 5
 
 [node name="Seconds" type="Sprite" parent="Stropwatch"]
+visible = false
 position = Vector2( 0, 3 )
 texture = ExtResource( 9 )
 vframes = 3
 hframes = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Stropwatch"]
-anims/Countdown = SubResource( 6 )
-anims/Idle = SubResource( 7 )
+anims/Countdown = SubResource( 7 )
+anims/Idle = SubResource( 8 )

@@ -1,12 +1,13 @@
 tool
 extends Resource
 
-class_name Transition, "../icons/transition.svg"
+class_name TransitionR, "../icons/transition.svg"
 
 var position:= Vector2()
 
 var fsm
-var target_state_index
+export (String) var name
+export (int) var target_state_index
 
 func condition_is_met()->bool:
 	return false

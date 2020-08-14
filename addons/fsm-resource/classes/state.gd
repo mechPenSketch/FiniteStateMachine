@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-class_name State, "../icons/state.svg"
+class_name StateR, "../icons/state.svg"
 
 export(String) var name
 
