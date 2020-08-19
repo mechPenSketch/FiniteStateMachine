@@ -1,22 +1,13 @@
 tool
-extends Node
+extends FSM_Component
 
-class_name State
-
-var active = false
+class_name State, "icons/state.svg"
 
 export(Array, NodePath) var transitions
 var transition_nodes = []
 
-# GRAPH
-var position:= Vector2()
-
-# SIGNALS
-signal activate
-signal deactivate
-
 func _get_configuration_warning():
-	return "" if get_parent() is FSM else "Parent should be FSM."
+	return "" if get_parent().get_class() == "FSM" else "Parent should be FSM."
 
 func _ready():
 	if !Engine.editor_hint:
@@ -31,14 +22,16 @@ func get_class():
 	return "State"
 
 func set_active(b:bool):
+	print(String(b), get_name())
 	active = b
 	
 	set_physics_process(active)
 	set_process(active)
 	set_process_input(active)
+	set_transitions()
 	
 	emit_signal("activate" if active else "deactivate")
 
-func set_transitions():	
-	for t in transitions:
+func set_transitions():
+	for t in transition_nodes:
 		t.set_active(active)

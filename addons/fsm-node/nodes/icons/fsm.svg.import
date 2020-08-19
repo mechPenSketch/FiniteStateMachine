@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fsm.svg-3bd386b1c1589d4a3550086516051f66.stex"
+path="res://.import/fsm.svg-0849d1abc27ebd79a0adbc29b9621c73.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/fsm-node/icons/fsm.svg"
-dest_files=[ "res://.import/fsm.svg-3bd386b1c1589d4a3550086516051f66.stex" ]
+source_file="res://addons/fsm-node/nodes/icons/fsm.svg"
+dest_files=[ "res://.import/fsm.svg-0849d1abc27ebd79a0adbc29b9621c73.stex" ]
 
 [params]
 

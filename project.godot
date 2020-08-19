@@ -9,35 +9,35 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Transition",
-"class": "ButtonTransition",
-"language": "GDScript",
-"path": "res://example/btn_trans.gd"
-}, {
 "base": "Node",
 "class": "FSM",
 "language": "GDScript",
-"path": "res://addons/fsm-node/classes/fsm.gd"
+"path": "res://addons/fsm-node/nodes/fsm.gd"
+}, {
+"base": "Node",
+"class": "FSM_Component",
+"language": "GDScript",
+"path": "res://addons/fsm-node/nodes/fsm_component.gd"
 }, {
 "base": "Node",
 "class": "FSMr",
 "language": "GDScript",
 "path": "res://addons/fsm-resource/classes/fsm.gd"
 }, {
-"base": "Node",
+"base": "FSM_Component",
 "class": "State",
 "language": "GDScript",
-"path": "res://addons/fsm-node/classes/state.gd"
+"path": "res://addons/fsm-node/nodes/state.gd"
 }, {
 "base": "Resource",
 "class": "StateR",
 "language": "GDScript",
 "path": "res://addons/fsm-resource/classes/state.gd"
 }, {
-"base": "Node",
+"base": "FSM_Component",
 "class": "Transition",
 "language": "GDScript",
-"path": "res://addons/fsm-node/classes/transition.gd"
+"path": "res://addons/fsm-node/nodes/transition.gd"
 }, {
 "base": "Resource",
 "class": "TransitionR",
@@ -45,12 +45,12 @@ _global_script_classes=[ {
 "path": "res://addons/fsm-resource/classes/transition.gd"
 } ]
 _global_script_class_icons={
-"ButtonTransition": "",
-"FSM": "",
+"FSM": "res://addons/fsm-node/nodes/icons/fsm.svg",
+"FSM_Component": "",
 "FSMr": "",
-"State": "",
+"State": "res://addons/fsm-node/nodes/icons/state.svg",
 "StateR": "res://addons/fsm-resource/icons/state.svg",
-"Transition": "",
+"Transition": "res://addons/fsm-node/nodes/icons/transition.svg",
 "TransitionR": "res://addons/fsm-resource/icons/transition.svg"
 }
 
