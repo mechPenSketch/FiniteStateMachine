@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://example/trafficlights.png" type="Texture" id=1]
 [ext_resource path="res://addons/fsm-node/nodes/fsm.gd" type="Script" id=2]
@@ -11,6 +11,9 @@
 [ext_resource path="res://example/stopwatch-timer.png" type="Texture" id=9]
 [ext_resource path="res://example/stopwatch-number.png" type="Texture" id=10]
 [ext_resource path="res://addons/fsm-node/nodes/transition.gd" type="Script" id=11]
+[ext_resource path="res://example/tl_ap.gd" type="Script" id=12]
+[ext_resource path="res://example/sw_ap.gd" type="Script" id=13]
+[ext_resource path="res://example/check_btn.gd" type="Script" id=14]
 
 [sub_resource type="Animation" id=1]
 tracks/0/type = "value"
@@ -75,7 +78,9 @@ CheckButton/styles/hover_pressed = null
 CheckButton/styles/normal = null
 CheckButton/styles/pressed = null
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="Animation" id=6]
 length = 5.0
 step = 0.0416667
 tracks/0/type = "value"
@@ -114,8 +119,22 @@ tracks/2/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/3/type = "method"
+tracks/3/path = NodePath("AnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 4.998 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "countdown_finished" ],
+"method": "emit_signal"
+} ]
+}
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Number:frame")
 tracks/0/interp = 1
@@ -181,6 +200,7 @@ target_state = NodePath("../Stop")
 anims/Go = SubResource( 1 )
 anims/Stop = SubResource( 2 )
 anims/Wait = SubResource( 3 )
+script = ExtResource( 12 )
 
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2( 68, 16.44 )
@@ -199,6 +219,8 @@ custom_icons/off = ExtResource( 5 )
 custom_icons/on_disabled = ExtResource( 7 )
 custom_icons/on = ExtResource( 6 )
 custom_icons/off_disabled = ExtResource( 4 )
+custom_styles/focus = SubResource( 5 )
+script = ExtResource( 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -212,16 +234,27 @@ position = Vector2( 0, 3 )
 texture = ExtResource( 10 )
 vframes = 2
 hframes = 3
+frame = 5
 
 [node name="Seconds" type="Sprite" parent="Stropwatch"]
+visible = false
 position = Vector2( 0, 3 )
 texture = ExtResource( 9 )
 vframes = 3
 hframes = 4
+frame = 11
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Stropwatch"]
-anims/Countdown = SubResource( 5 )
-anims/Idle = SubResource( 6 )
-[connection signal="pressed" from="Node2D/CheckButton" to="TrafficLight/FSM/ToWait" method="_condition"]
+anims/Countdown = SubResource( 6 )
+anims/Idle = SubResource( 7 )
+script = ExtResource( 13 )
+[connection signal="activate" from="TrafficLight/FSM/Stop" to="Node2D/CheckButton" method="_on_stop_activated"]
+[connection signal="activate" from="TrafficLight/FSM/Stop" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= [ "Stop" ]]
+[connection signal="activate" from="TrafficLight/FSM/Wait" to="Node2D/CheckButton" method="_on_wait_activated"]
+[connection signal="activate" from="TrafficLight/FSM/Wait" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= [ "Wait" ]]
+[connection signal="activate" from="TrafficLight/FSM/Wait" to="Stropwatch/AnimationPlayer" method="_on_wait_activated"]
+[connection signal="activate" from="TrafficLight/FSM/Go" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= [ "Go" ]]
 [connection signal="pressed" from="Node2D/CheckButton" to="TrafficLight/FSM/ToGo" method="_condition"]
-[connection signal="animation_finished" from="Stropwatch/AnimationPlayer" to="TrafficLight/FSM/ToStop" method="_condition"]
+[connection signal="pressed" from="Node2D/CheckButton" to="TrafficLight/FSM/ToWait" method="_condition"]
+[connection signal="countdown_finished" from="Stropwatch/AnimationPlayer" to="TrafficLight/FSM/ToStop" method="_condition"]
+[connection signal="countdown_finished" from="Stropwatch/AnimationPlayer" to="Stropwatch/AnimationPlayer" method="_on_countdown_finished"]
