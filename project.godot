@@ -19,39 +19,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/fsm-node/nodes/fsm_component.gd"
 }, {
-"base": "Node",
-"class": "FSMr",
-"language": "GDScript",
-"path": "res://addons/fsm-resource/classes/fsm.gd"
-}, {
 "base": "FSM_Component",
 "class": "State",
 "language": "GDScript",
 "path": "res://addons/fsm-node/nodes/state.gd"
 }, {
-"base": "Resource",
-"class": "StateR",
-"language": "GDScript",
-"path": "res://addons/fsm-resource/classes/state.gd"
-}, {
 "base": "FSM_Component",
 "class": "Transition",
 "language": "GDScript",
 "path": "res://addons/fsm-node/nodes/transition.gd"
-}, {
-"base": "Resource",
-"class": "TransitionR",
-"language": "GDScript",
-"path": "res://addons/fsm-resource/classes/transition.gd"
 } ]
 _global_script_class_icons={
 "FSM": "res://addons/fsm-node/nodes/icons/fsm.svg",
 "FSM_Component": "",
-"FSMr": "",
 "State": "res://addons/fsm-node/nodes/icons/state.svg",
-"StateR": "res://addons/fsm-resource/icons/state.svg",
-"Transition": "res://addons/fsm-node/nodes/icons/transition.svg",
-"TransitionR": "res://addons/fsm-resource/icons/transition.svg"
+"Transition": "res://addons/fsm-node/nodes/icons/transition.svg"
 }
 
 [application]
