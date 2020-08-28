@@ -11,7 +11,7 @@ func _condition():
 	get_parent().change_state(target_state_node)
 
 func _get_configuration_warning():
-	return "" if get_parent().get_class() == "FSM" else "Parent should be FSM."
+	return "" if get_parent().is_class("FSM") else "Parent should be FSM."
 
 func _ready():
 	if !Engine.editor_hint:

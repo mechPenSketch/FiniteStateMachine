@@ -18,7 +18,7 @@ func _get_configuration_warning():
 	# to get called by update_configuration_warning() when there's a change in tree
 	
 	for c in get_children():
-		if c.get_class() == "State":
+		if c.is_class("State"):
 			return ""
 	return "Add at least one State to this node."
 	
@@ -36,3 +36,6 @@ func deactivate_state():
 
 func get_class():
 	return "FSM"
+
+func is_class(c):
+	return c == get_class() or .is_class(c)
