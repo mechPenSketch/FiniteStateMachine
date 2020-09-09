@@ -5,8 +5,15 @@ class_name FSM, "icons/fsm.svg"
 
 var current_state
 var state_tranistion_indexes
+export(NodePath) var starting_state
 
 func _ready():
+	# If the starting_state is defnied, we'll use it
+	if starting_state:
+		current_state = get_node(starting_state)
+		current_state.set_active(true)
+		return
+	# Otherwise, we'll use the first state in our children
 	if !Engine.editor_hint:
 		for c in get_children():
 			if c.get_class() == "State":
