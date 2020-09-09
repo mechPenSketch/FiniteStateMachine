@@ -19,7 +19,7 @@ func _ready():
 		# Otherwise, we'll use the first state in our children
 		else:
 			for c in get_children():
-				if c.is_class() == "State":
+				if c.is_class("State"):
 					current_state = c
 					c.set_active(true)
 					break
