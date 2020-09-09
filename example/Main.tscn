@@ -248,13 +248,13 @@ frame = 11
 anims/Countdown = SubResource( 6 )
 anims/Idle = SubResource( 7 )
 script = ExtResource( 13 )
-[connection signal="activate" from="TrafficLight/FSM/Stop" to="Node2D/CheckButton" method="_on_stop_activated"]
 [connection signal="activate" from="TrafficLight/FSM/Stop" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= [ "Stop" ]]
-[connection signal="activate" from="TrafficLight/FSM/Wait" to="Node2D/CheckButton" method="_on_wait_activated"]
+[connection signal="activate" from="TrafficLight/FSM/Stop" to="Node2D/CheckButton" method="_on_stop_activated"]
 [connection signal="activate" from="TrafficLight/FSM/Wait" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= [ "Wait" ]]
+[connection signal="activate" from="TrafficLight/FSM/Wait" to="Node2D/CheckButton" method="_on_wait_activated"]
 [connection signal="activate" from="TrafficLight/FSM/Wait" to="Stropwatch/AnimationPlayer" method="_on_wait_activated"]
 [connection signal="activate" from="TrafficLight/FSM/Go" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= [ "Go" ]]
-[connection signal="pressed" from="Node2D/CheckButton" to="TrafficLight/FSM/ToGo" method="_condition"]
 [connection signal="pressed" from="Node2D/CheckButton" to="TrafficLight/FSM/ToWait" method="_condition"]
+[connection signal="pressed" from="Node2D/CheckButton" to="TrafficLight/FSM/ToGo" method="_condition"]
 [connection signal="countdown_finished" from="Stropwatch/AnimationPlayer" to="TrafficLight/FSM/ToStop" method="_condition"]
 [connection signal="countdown_finished" from="Stropwatch/AnimationPlayer" to="Stropwatch/AnimationPlayer" method="_on_countdown_finished"]
