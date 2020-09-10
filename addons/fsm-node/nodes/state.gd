@@ -10,6 +10,8 @@ func _get_configuration_warning():
 	return "" if get_parent().is_class("FSM") else "Parent should be FSM."
 
 func _ready():
+	._ready()
+	
 	if !Engine.editor_hint:
 		set_physics_process(false)
 		set_process(false)

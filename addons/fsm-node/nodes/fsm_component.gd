@@ -12,8 +12,19 @@ var position:= Vector2()
 signal activate
 signal deactivate
 
+func _activate():
+	pass
+
+func _deactivate():
+	pass
+
 func _get_configuration_warning():
 	return "This is a base class not intended to be used as a node."
+
+func _ready():
+	if !Engine.editor_hint:
+		connect("activate", self, "_activate")
+		connect("deactivate", self, "_deactivate")
 
 func is_active():
 	return active

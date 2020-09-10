@@ -14,6 +14,8 @@ func _get_configuration_warning():
 	return "" if get_parent().is_class("FSM") else "Parent should be FSM."
 
 func _ready():
+	._ready()
+	
 	if !Engine.editor_hint:
 		# TARGET STATE
 		target_state_node = get_node(target_state)
