@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Finite State Machine"
-run/main_scene="res://example/Main.tscn"
+run/main_scene="res://addons/fsm-node/main_screen/Example.tscn"
 config/icon="res://icon.png"
 
 [display]

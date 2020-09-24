@@ -1,7 +1,7 @@
 tool
 extends EditorPlugin
 
-var MainPanel = preload("main_screen/MainPanel.tscn")
+var MainPanel = preload("main_screen/Example.tscn")
 var main_panel_instance
 
 func _enter_tree():
