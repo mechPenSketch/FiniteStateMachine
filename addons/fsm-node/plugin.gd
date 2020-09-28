@@ -22,6 +22,12 @@ func _enter_tree():
 		"addstate": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer3/AddState"),
 		"addtransition": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer3/AddTransition")
 	}
+	
+	# REUSE GODOT ICONS
+	toolbar_btns["select"].set_button_icon(get_editor_interface().get_base_control().get_icon("ToolSelect", "EditorIcons"))
+	toolbar_btns["move"].set_button_icon(get_editor_interface().get_base_control().get_icon("ToolMove", "EditorIcons"))
+	
+	# DEFINE PRESS METHODS
 	toolbar_btns_pressed_methods = {
 		"select": "_on_select_pressed",
 		"move": "_on_move_pressed",

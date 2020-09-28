@@ -1,10 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/fsm-node/main_screen/icon.svg" type="Texture" id=1]
-[ext_resource path="res://addons/fsm-node/main_screen/toolbar_icons/ToolSelect.svg" type="Texture" id=2]
 [ext_resource path="res://addons/fsm-node/main_screen/toolbar_icons/SelectState.svg" type="Texture" id=3]
 [ext_resource path="res://addons/fsm-node/main_screen/toolbar_icons/SelectTransition.svg" type="Texture" id=4]
-[ext_resource path="res://addons/fsm-node/main_screen/toolbar_icons/ToolMove.svg" type="Texture" id=5]
 [ext_resource path="res://addons/fsm-node/main_screen/toolbar_icons/AddState.svg" type="Texture" id=6]
 [ext_resource path="res://addons/fsm-node/main_screen/toolbar_icons/AddTransition.svg" type="Texture" id=7]
 
@@ -31,7 +29,7 @@ margin_bottom = 24.0
 custom_constants/separation = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_right = 62.0
+margin_right = 30.0
 margin_bottom = 24.0
 custom_constants/separation = 6
 __meta__ = {
@@ -39,27 +37,25 @@ __meta__ = {
 }
 
 [node name="Select" type="ToolButton" parent="MarginContainer/HBoxContainer/HBoxContainer"]
-margin_right = 28.0
+margin_right = 12.0
 margin_bottom = 24.0
 toggle_mode = true
-icon = ExtResource( 2 )
 
 [node name="Move" type="ToolButton" parent="MarginContainer/HBoxContainer/HBoxContainer"]
-margin_left = 34.0
-margin_right = 62.0
+margin_left = 18.0
+margin_right = 30.0
 margin_bottom = 24.0
 toggle_mode = true
-icon = ExtResource( 5 )
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer"]
-margin_left = 66.0
-margin_right = 66.0
+margin_left = 34.0
+margin_right = 34.0
 margin_bottom = 24.0
 custom_constants/separation = 0
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_left = 70.0
-margin_right = 166.0
+margin_left = 38.0
+margin_right = 134.0
 margin_bottom = 24.0
 custom_constants/separation = 6
 __meta__ = {
@@ -87,14 +83,14 @@ toggle_mode = true
 icon = ExtResource( 4 )
 
 [node name="VSeparator2" type="VSeparator" parent="MarginContainer/HBoxContainer"]
-margin_left = 170.0
-margin_right = 170.0
+margin_left = 138.0
+margin_right = 138.0
 margin_bottom = 24.0
 custom_constants/separation = 0
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_left = 174.0
-margin_right = 236.0
+margin_left = 142.0
+margin_right = 204.0
 margin_bottom = 24.0
 custom_constants/separation = 6
 __meta__ = {
