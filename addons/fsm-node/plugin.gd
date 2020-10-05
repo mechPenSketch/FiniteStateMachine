@@ -38,9 +38,13 @@ func _enter_tree():
 		"addtransition": "_on_addtransition_pressed"
 	}
 	
-	#	CONNECT SIGNALS
+	# CONNECT SIGNALS
 	for k in toolbar_btns.keys():
 		toolbar_btns[k].connect("pressed", self, toolbar_btns_pressed_methods[k])
+		
+	# SET TOOLSELECT AND FSM TO PRESS
+	toolbar_btns["select"].set_pressed(true)
+	toolbar_btns["fsm"].set_pressed(true)
 
 func _exit_tree():
 	# DISCONNECT SIGNALS
