@@ -1,0 +1,65 @@
+[gd_resource type="Theme" load_steps=4 format=2]
+
+[ext_resource path="res://graph_edit/PortArrowhead.svg" type="Texture" id=1]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.45098, 0.298039, 0.517647, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 0.709804, 0.529412, 0.788235, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 7.0
+expand_margin_right = 7.0
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.45098, 0.298039, 0.517647, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 7.0
+expand_margin_right = 7.0
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+
+[resource]
+GraphNode/colors/close_color = Color( 0, 0, 0, 1 )
+GraphNode/colors/resizer_color = Color( 0, 0, 0, 1 )
+GraphNode/colors/title_color = Color( 0, 0, 0, 1 )
+GraphNode/constants/close_offset = 18
+GraphNode/constants/port_offset = 3
+GraphNode/constants/separation = 1
+GraphNode/constants/title_offset = 20
+GraphNode/fonts/title_font = null
+GraphNode/icons/close = null
+GraphNode/icons/port = ExtResource( 1 )
+GraphNode/icons/resizer = null
+GraphNode/styles/breakpoint = null
+GraphNode/styles/comment = null
+GraphNode/styles/commentfocus = null
+GraphNode/styles/defaultfocus = null
+GraphNode/styles/defaultframe = null
+GraphNode/styles/frame = SubResource( 3 )
+GraphNode/styles/position = null
+GraphNode/styles/selectedframe = SubResource( 2 )
+Label/colors/font_color = Color( 1, 1, 1, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = null
+Label/styles/normal = null
