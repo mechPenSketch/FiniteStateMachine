@@ -3,7 +3,11 @@ extends EditorPlugin
 
 var MainPanel = preload("main_screen/MainPanel.tscn")
 var main_panel_instance
-var main_panel_graphedit
+
+var graph_fsm_edit_root
+var GraphFsmEdit = preload("main_screen/GraphFSMEdit.tscn")
+var GraphStateEdit = preload("main_screen/graph_nodes/GraphState.tscn")
+var GraphTransitionEdit = preload("main_screen/graph_nodes/GraphTransition.tscn")
 
 var toolbar_btns:Dictionary
 var toolbar_btns_pressed_methods:Dictionary
@@ -12,13 +16,11 @@ func _enter_tree():
 	main_panel_instance = MainPanel.instance()
 	get_editor_interface().get_editor_viewport().add_child(main_panel_instance)
 	make_visible(false)
-	main_panel_graphedit = main_panel_instance.get_node("GraphEdit")
 	
 	# SET TOOLBAR BUTTONS
 	toolbar_btns = {
 		"select": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer/Select"),
 		"move": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer/Move"),
-		"fsm": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer2/FSM"),
 		"state":  main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer2/State"),
 		"transition":  main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer2/Transition"),
 		"addstate": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer3/AddState"),
@@ -33,7 +35,6 @@ func _enter_tree():
 	toolbar_btns_pressed_methods = {
 		"select": "_on_select_pressed",
 		"move": "_on_move_pressed",
-		"fsm": "_on_fsm_pressed",
 		"state": "_on_state_pressed",
 		"transition": "_on_transition_pressed",
 		"addstate": "_on_addstate_pressed",
@@ -46,7 +47,9 @@ func _enter_tree():
 		
 	# SET TOOLSELECT AND FSM TO PRESS
 	toolbar_btns["select"].set_pressed(true)
-	toolbar_btns["fsm"].set_pressed(true)
+	
+	# GRAPHWORKS
+	graph_fsm_edit_root = main_panel_instance.get_node("ScrollContainer/VBoxContainer")
 
 func _exit_tree():
 	# DISCONNECT SIGNALS
@@ -77,20 +80,11 @@ func _on_select_pressed():
 	
 func _on_move_pressed():
 	pass
-
-func _on_fsm_pressed():
-	
-	# UN-PRESS STATE AND TRANSITION
-	pass
 	
 func _on_state_pressed():
-	
-	# UN-PRESS FSM
 	pass
 	
 func _on_transition_pressed():
-	
-	# UN-PRESS FSM
 	pass
 
 func _on_addstate_pressed():
@@ -99,13 +93,24 @@ func _on_addstate_pressed():
 func _on_addtransition_pressed():
 	pass
 
+# GRAPHWORKS
 func check_drawable_fsm_then_children(node):
+	# IF NODE EXTENDS FROM CLASS FSM
+	if node.is_class("FSM"):
+		# ADD NEW FSM GRAPH
+		# GIVE IT A LABEL
+		# ADD STATES AND TRANSITIONS
+		pass
+	
+	# REPEAT STEP WITH CHILDREN
 	for c in node.get_children():
 		check_drawable_fsm_then_children(c)
 
 func update_graph_fsm():
-	# CLEAR PREVIOUS DIAGRAM
-	for c in main_panel_graphedit.get_children():
+	# CLEAR PREVIOUS FSM GRAPHS
+	for c in graph_fsm_edit_root.get_children():
 		c.queue_free()
 		
 	check_drawable_fsm_then_children(get_tree().get_edited_scene_root())
+
+# INTERFACE INTERACTIONS
