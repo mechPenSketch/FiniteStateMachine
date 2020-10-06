@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://graph_edit/StateTheme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/fsm-node/main_screen/graph_nodes/StateTheme.tres" type="Theme" id=1]
 
 [node name="State" type="GraphNode"]
 margin_left = 100.0
@@ -10,7 +10,6 @@ margin_bottom = 74.0
 mouse_filter = 1
 theme = ExtResource( 1 )
 custom_constants/port_offset = -12
-offset = Vector2( 100, 50 )
 slot/0/left_enabled = true
 slot/0/left_type = 0
 slot/0/left_color = Color( 0.709804, 0.529412, 0.788235, 1 )

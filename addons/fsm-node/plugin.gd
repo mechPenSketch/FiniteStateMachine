@@ -3,6 +3,7 @@ extends EditorPlugin
 
 var MainPanel = preload("main_screen/MainPanel.tscn")
 var main_panel_instance
+var main_panel_graphedit
 
 var toolbar_btns:Dictionary
 var toolbar_btns_pressed_methods:Dictionary
@@ -11,6 +12,7 @@ func _enter_tree():
 	main_panel_instance = MainPanel.instance()
 	get_editor_interface().get_editor_viewport().add_child(main_panel_instance)
 	make_visible(false)
+	main_panel_graphedit = main_panel_instance.get_node("GraphEdit")
 	
 	# SET TOOLBAR BUTTONS
 	toolbar_btns = {
@@ -97,3 +99,13 @@ func _on_addstate_pressed():
 func _on_addtransition_pressed():
 	pass
 
+func check_drawable_fsm_then_children(node):
+	for c in node.get_children():
+		check_drawable_fsm_then_children(c)
+
+func update_graph_fsm():
+	# CLEAR PREVIOUS DIAGRAM
+	for c in main_panel_graphedit.get_children():
+		c.queue_free()
+		
+	check_drawable_fsm_then_children(get_tree().get_edited_scene_root())

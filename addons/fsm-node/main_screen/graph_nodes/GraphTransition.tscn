@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://graph_edit/TransitionTheme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/fsm-node/main_screen/graph_nodes/TransitionTheme.tres" type="Theme" id=1]
 
 [node name="Transition" type="GraphNode"]
 margin_left = 300.0
@@ -10,7 +10,6 @@ margin_bottom = 154.0
 mouse_filter = 1
 theme = ExtResource( 1 )
 custom_constants/port_offset = 2
-offset = Vector2( 300, 100 )
 slot/0/left_enabled = true
 slot/0/left_type = 1
 slot/0/left_color = Color( 0.137255, 0, 0.6, 1 )
