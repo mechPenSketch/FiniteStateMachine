@@ -7,6 +7,9 @@ var current_state
 var state_tranistion_indexes
 export(NodePath) var starting_state
 
+# GRAPH
+var associate_graph_edit
+
 func _ready():
 	# If this is not called in the editor
 	if !Engine.editor_hint:

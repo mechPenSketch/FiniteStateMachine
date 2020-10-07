@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/fsm-node/main_screen/graph_nodes/StateTheme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/fsm-node/main_screen/graph_nodes/ComponentGraphNode.gd" type="Script" id=2]
 
 [node name="State" type="GraphNode"]
 margin_right = 42.0
@@ -14,6 +15,7 @@ slot/0/left_color = Color( 0.709804, 0.529412, 0.788235, 1 )
 slot/0/right_enabled = true
 slot/0/right_type = 1
 slot/0/right_color = Color( 0.45098, 0.298039, 0.517647, 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

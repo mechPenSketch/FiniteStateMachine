@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://addons/fsm-node/main_screen/GraphFSMEdit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/fsm-node/main_screen/toolbar_icons/SelectState.svg" type="Texture" id=3]
 [ext_resource path="res://addons/fsm-node/main_screen/toolbar_icons/SelectTransition.svg" type="Texture" id=4]
 [ext_resource path="res://addons/fsm-node/main_screen/toolbar_icons/AddState.svg" type="Texture" id=6]
@@ -117,8 +116,3 @@ margin_right = 172.0
 margin_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="GraphFSMEdit" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 0.0
-margin_bottom = 46.0
-scroll_offset = Vector2( 0, 0 )

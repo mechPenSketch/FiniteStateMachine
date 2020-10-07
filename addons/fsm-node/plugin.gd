@@ -6,11 +6,15 @@ var main_panel_instance
 
 var graph_fsm_edit_root
 var GraphFsmEdit = preload("main_screen/GraphFSMEdit.tscn")
-var GraphStateEdit = preload("main_screen/graph_nodes/GraphState.tscn")
-var GraphTransitionEdit = preload("main_screen/graph_nodes/GraphTransition.tscn")
+var GraphStateNode = preload("main_screen/graph_nodes/GraphState.tscn")
+var GraphTransitionNode = preload("main_screen/graph_nodes/GraphTransition.tscn")
 
 var toolbar_btns:Dictionary
 var toolbar_btns_pressed_methods:Dictionary
+var tool_mode
+enum {TOOL_SELECT, TOOL_MOVE}
+var select_state:bool = true
+var select_transition:bool = true
 
 func _enter_tree():
 	main_panel_instance = MainPanel.instance()
@@ -76,16 +80,16 @@ func make_visible(visible):
 
 # TOOLBAR BUTTON FUNCTIONS
 func _on_select_pressed():
-	pass
+	tool_mode = TOOL_SELECT
 	
 func _on_move_pressed():
-	pass
+	tool_mode = TOOL_MOVE
 	
-func _on_state_pressed():
-	pass
+func _on_state_pressed(b):
+	select_state = b
 	
-func _on_transition_pressed():
-	pass
+func _on_transition_pressed(b):
+	select_transition = b
 
 func _on_addstate_pressed():
 	pass
@@ -94,14 +98,41 @@ func _on_addtransition_pressed():
 	pass
 
 # GRAPHWORKS
+func add_state_node(fsm_root, base):
+	var gsn = GraphStateNode.instance()
+	fsm_root.add_child(gsn)
+	gsn.associated_component = base
+	base.associated_graph_node = gsn
+	
+	gsn.set_offset(base.graph_offset)
+	gsn.set_name(base)
+	
+func add_transition_node(fsm_root, base):
+	var gtn = GraphTransitionNode.instance()
+	fsm_root.add_child(gtn)
+
 func check_drawable_fsm_then_children(node):
 	# IF NODE EXTENDS FROM CLASS FSM
 	if node.is_class("FSM"):
 		# ADD NEW FSM GRAPH
+		var gfe_instance = GraphFsmEdit.instance()
+		graph_fsm_edit_root.add_child(gfe_instance)
+		node.associate_graph_edit = gfe_instance
+		gfe_instance.associated_fsm = node
+		
 		# GIVE IT A LABEL
+		var fsm_title = Label.new()
+		fsm_title.set_text(node.get_name())
+		gfe_instance.get_zoom_hbox().add_child(fsm_title)
+		gfe_instance.get_zoom_hbox().move_child(fsm_title, 0)
+		
 		# ADD STATES AND TRANSITIONS
-		pass
-	
+		for c in node.get_children():
+			if c.is_class("State"):
+				add_state_node(node, c)
+			#elif c.is_class("Transition"):
+				#add_transition_node(node, c)
+		
 	# REPEAT STEP WITH CHILDREN
 	for c in node.get_children():
 		check_drawable_fsm_then_children(c)
