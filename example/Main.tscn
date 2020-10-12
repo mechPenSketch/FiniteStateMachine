@@ -174,26 +174,32 @@ script = ExtResource( 2 )
 
 [node name="Stop" type="Node" parent="TrafficLight/FSM"]
 script = ExtResource( 3 )
+graph_offset = Vector2( 0, 0 )
 transitions = [ NodePath("../ToGo") ]
 
 [node name="Wait" type="Node" parent="TrafficLight/FSM"]
 script = ExtResource( 3 )
+graph_offset = Vector2( 420, 440 )
 transitions = [ NodePath("../ToStop") ]
 
 [node name="Go" type="Node" parent="TrafficLight/FSM"]
 script = ExtResource( 3 )
+graph_offset = Vector2( 540, 80 )
 transitions = [ NodePath("../ToWait") ]
 
 [node name="ToGo" type="Node" parent="TrafficLight/FSM"]
 script = ExtResource( 11 )
+graph_offset = Vector2( 220, 20 )
 target_state = NodePath("../Go")
 
 [node name="ToWait" type="Node" parent="TrafficLight/FSM"]
 script = ExtResource( 11 )
+graph_offset = Vector2( 740, 200 )
 target_state = NodePath("../Wait")
 
 [node name="ToStop" type="Node" parent="TrafficLight/FSM"]
 script = ExtResource( 11 )
+graph_offset = Vector2( 20, 240 )
 target_state = NodePath("../Stop")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TrafficLight"]

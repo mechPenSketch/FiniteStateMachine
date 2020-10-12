@@ -6,8 +6,8 @@ var main_panel_instance
 
 var graph_fsm_edit_root
 var GraphFsmEdit = preload("main_screen/GraphFSMEdit.tscn")
-var GraphStateNode = preload("main_screen/graph_nodes/GraphState.tscn")
-var GraphTransitionNode = preload("main_screen/graph_nodes/GraphTransition.tscn")
+var GraphNodes = {"state": preload("main_screen/graph_nodes/GraphState.tscn"),
+"transition":  preload("main_screen/graph_nodes/GraphTransition.tscn")}
 
 var toolbar_btns:Dictionary
 var toolbar_btns_pressed_methods:Dictionary
@@ -46,6 +46,8 @@ func _enter_tree():
 	}
 	
 	# CONNECT SIGNALS
+	connect("scene_changed", self, "_on_screen_changed")
+	
 	for k in toolbar_btns.keys():
 		toolbar_btns[k].connect("pressed", self, toolbar_btns_pressed_methods[k])
 		
@@ -64,6 +66,9 @@ func _exit_tree():
 	
 	if main_panel_instance:
 		main_panel_instance.queue_free()
+
+func _on_screen_changed(scene_root):
+	update_graph_fsm(scene_root)
 
 func get_plugin_icon():
 	return preload("main_screen/icon.svg")
@@ -98,18 +103,14 @@ func _on_addtransition_pressed():
 	pass
 
 # GRAPHWORKS
-func add_state_node(fsm_root, base):
-	var gsn = GraphStateNode.instance()
-	fsm_root.add_child(gsn)
-	gsn.associated_component = base
-	base.associated_graph_node = gsn
+
+func add_graph_node(key, fsm_root, base):
+	var gn = GraphNodes[key].instance()
+	fsm_root.add_child(gn)
+	gn.set_associated_component(base)
 	
-	gsn.set_offset(base.graph_offset)
-	gsn.set_name(base)
-	
-func add_transition_node(fsm_root, base):
-	var gtn = GraphTransitionNode.instance()
-	fsm_root.add_child(gtn)
+	gn.set_offset(base.graph_offset)
+	gn.set_name(base.get_name())
 
 func check_drawable_fsm_then_children(node):
 	# IF NODE EXTENDS FROM CLASS FSM
@@ -118,7 +119,7 @@ func check_drawable_fsm_then_children(node):
 		var gfe_instance = GraphFsmEdit.instance()
 		graph_fsm_edit_root.add_child(gfe_instance)
 		node.associate_graph_edit = gfe_instance
-		gfe_instance.associated_fsm = node
+		gfe_instance.set_associated_fsm(node)
 		
 		# GIVE IT A LABEL
 		var fsm_title = Label.new()
@@ -127,21 +128,40 @@ func check_drawable_fsm_then_children(node):
 		gfe_instance.get_zoom_hbox().move_child(fsm_title, 0)
 		
 		# ADD STATES AND TRANSITIONS
+		#	PREPARE CONNECTIONS
+		var connections = []
+		
+		# 	FOR EVERY CHILD NODE
 		for c in node.get_children():
+			
+			# STATE
 			if c.is_class("State"):
-				add_state_node(node, c)
-			#elif c.is_class("Transition"):
-				#add_transition_node(node, c)
+				add_graph_node("state", gfe_instance, c)
+				# IF THERE ARE ANY CONNECTIONS
+				if c.transitions:
+					for t in c.transitions:
+						connections += [{"from": c, "to": c.get_node(t)}]
+			
+			# TRANSITION
+			elif c.is_class("Transition"):
+				add_graph_node("transition", gfe_instance, c)
+				# IF THERE IS ANY CONNECTION
+				if c.target_state:
+					connections += [{"from": c, "to": c.get_node(c.target_state)}]
+					
+		#	CONNECT EVERYTHING TOGETHER
+		for c in connections:
+			gfe_instance.connect_node(c["from"].get_name(), 0, c["to"].get_name(), 0)
 		
 	# REPEAT STEP WITH CHILDREN
 	for c in node.get_children():
 		check_drawable_fsm_then_children(c)
 
-func update_graph_fsm():
+func update_graph_fsm(scene_root):
 	# CLEAR PREVIOUS FSM GRAPHS
 	for c in graph_fsm_edit_root.get_children():
 		c.queue_free()
 		
-	check_drawable_fsm_then_children(get_tree().get_edited_scene_root())
+	check_drawable_fsm_then_children(scene_root)
 
 # INTERFACE INTERACTIONS

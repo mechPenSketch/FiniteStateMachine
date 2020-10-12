@@ -6,8 +6,7 @@ class_name FSM_Component
 var active = false
 
 # GRAPH
-var graph_offset:= Vector2()
-var associated_graph_node
+export(Vector2) var graph_offset
 
 # SIGNALS
 signal activate
