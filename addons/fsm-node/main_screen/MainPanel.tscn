@@ -41,6 +41,7 @@ __meta__ = {
 margin_right = 12.0
 margin_bottom = 24.0
 toggle_mode = true
+pressed = true
 group = SubResource( 1 )
 
 [node name="Move" type="ToolButton" parent="MarginContainer/HBoxContainer/HBoxContainer"]
@@ -69,6 +70,7 @@ __meta__ = {
 margin_right = 28.0
 margin_bottom = 24.0
 toggle_mode = true
+pressed = true
 icon = ExtResource( 3 )
 
 [node name="Transition" type="ToolButton" parent="MarginContainer/HBoxContainer/HBoxContainer2"]
@@ -76,6 +78,7 @@ margin_left = 34.0
 margin_right = 62.0
 margin_bottom = 24.0
 toggle_mode = true
+pressed = true
 icon = ExtResource( 4 )
 
 [node name="VSeparator2" type="VSeparator" parent="MarginContainer/HBoxContainer"]

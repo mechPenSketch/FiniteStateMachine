@@ -17,11 +17,15 @@ var select_state:bool = true
 var select_transition:bool = true
 
 func _enter_tree():
+	print("Enter Tree")
+	# SET UP MAIN SCREEN
 	main_panel_instance = MainPanel.instance()
 	get_editor_interface().get_editor_viewport().add_child(main_panel_instance)
 	make_visible(false)
+	print("Main Screen is Added")
 	
-	# SET TOOLBAR BUTTONS
+	# SET TOOLBAR
+	#	GET BUTTONS
 	toolbar_btns = {
 		"select": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer/Select"),
 		"move": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer/Move"),
@@ -31,11 +35,11 @@ func _enter_tree():
 		"addtransition": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer3/AddTransition")
 	}
 	
-	# REUSE GODOT ICONS
+	#	REUSE GODOT ICONS
 	toolbar_btns["select"].set_button_icon(get_editor_interface().get_base_control().get_icon("ToolSelect", "EditorIcons"))
 	toolbar_btns["move"].set_button_icon(get_editor_interface().get_base_control().get_icon("ToolMove", "EditorIcons"))
 	
-	# DEFINE PRESS METHODS
+	#	DEFINE PRESS METHODS
 	toolbar_btns_pressed_methods = {
 		"select": "_on_select_pressed",
 		"move": "_on_move_pressed",
@@ -45,17 +49,15 @@ func _enter_tree():
 		"addtransition": "_on_addtransition_pressed"
 	}
 	
-	# CONNECT SIGNALS
+	#	CONNECT SIGNALS
 	connect("scene_changed", self, "_on_screen_changed")
 	
 	for k in toolbar_btns.keys():
 		toolbar_btns[k].connect("pressed", self, toolbar_btns_pressed_methods[k])
-		
-	# SET TOOLSELECT AND FSM TO PRESS
-	toolbar_btns["select"].set_pressed(true)
 	
 	# GRAPHWORKS
 	graph_fsm_edit_root = main_panel_instance.get_node("ScrollContainer/VBoxContainer")
+	get_tree().connect("node_added", self, "_on_node_added_to_tree")
 
 func _exit_tree():
 	# DISCONNECT SIGNALS
@@ -69,6 +71,12 @@ func _exit_tree():
 
 func _on_screen_changed(scene_root):
 	update_graph_fsm(scene_root)
+	
+	print("Add from Change of Scene")
+	print(graph_fsm_edit_root.get_children())
+
+func _ready():
+	print("Ready")
 
 func get_plugin_icon():
 	return preload("main_screen/icon.svg")
@@ -103,6 +111,49 @@ func _on_addtransition_pressed():
 	pass
 
 # GRAPHWORKS
+func _on_node_added_to_tree(node):
+	# THIS METHOD DOES NOT SEEM TO ADD NODES IN MAIN BRANCH TO FSM MAIN SCREEN EVEN THOUGH IT'S CALLED BETWEEN _ready() and _on_screen_changed().
+	
+	if node.is_class("FSM"):
+		# ADD NEW FSM GRAPH
+		print("Add from Node added to Tree")
+		var gfe_instance = GraphFsmEdit.instance()
+		graph_fsm_edit_root.add_child(gfe_instance)
+		node.associate_graph_edit = gfe_instance
+		gfe_instance.set_associated_fsm(node)
+		print(graph_fsm_edit_root.get_children())
+		
+		# GIVE IT A LABEL
+		var fsm_title = Label.new()
+		fsm_title.set_text(node.get_name())
+		gfe_instance.get_zoom_hbox().add_child(fsm_title)
+		gfe_instance.get_zoom_hbox().move_child(fsm_title, 0)
+		
+		# CONNECT FOR WHEN ALL CONNECTIONS ARE ESTABLISHED
+		#node.connect("ready", self, "_on_fsm_ready", [node], CONNECT_ONESHOT)
+	
+	elif node.is_class("FSM_Component"):
+		var parent = node.get_parent()
+		if parent.is_class("FSM"):
+			var gfe = parent.associate_graph_edit
+			
+			var is_state = node.is_class("State")
+			add_graph_node("state" if is_state else "transition", gfe, node)
+			if is_state:
+				# IF THERE ARE ANY CONNECTIONS
+				if node.transitions:
+					for t in node.transitions:
+						parent.connections += [{"from": node, "to": node.get_node(t)}]
+				
+			else:
+				# IF THERE IS ANY CONNECTION
+				if node.target_state:
+					parent.connections += [{"from": node, "to": node.get_node(node.target_state)}]
+
+func _on_fsm_ready(fsm_node):
+	#	CONNECT EVERYTHING TOGETHER
+	for c in fsm_node.connections:
+		fsm_node.associate_graph_edit.connect_node(c["from"].get_name(), 0, c["to"].get_name(), 0)
 
 func add_graph_node(key, fsm_root, base):
 	var gn = GraphNodes[key].instance()

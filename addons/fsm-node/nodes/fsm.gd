@@ -9,6 +9,7 @@ export(NodePath) var starting_state
 
 # GRAPH
 var associate_graph_edit
+var connections = []
 
 func _ready():
 	# If this is not called in the editor
