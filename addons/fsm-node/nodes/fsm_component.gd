@@ -7,6 +7,7 @@ var active = false
 
 # GRAPH
 export(Vector2) var graph_offset
+var associated_graph_node
 
 # SIGNALS
 signal activate
@@ -25,6 +26,9 @@ func _ready():
 	if !Engine.editor_hint:
 		connect("activate", self, "_activate")
 		connect("deactivate", self, "_deactivate")
+
+func get_class():
+	return "FSM_Component"
 
 func is_active():
 	return active
