@@ -154,6 +154,15 @@ func _on_node_removed_from_tree(node):
 		node.associate_graph_edit.queue_free()
 		
 	elif node is FSM_Component:
+		# DISCONNECT FROM AFFECTED NODE
+		var parent = node.get_parent()
+		if parent is FSM:
+			var parent_edit = parent.associate_graph_edit
+			var node_name = node.get_name()
+			for c in parent_edit.get_connection_list():
+				if c["from"] == node_name or c["to"] == node_name:
+					parent_edit.disconnect_node(c["from"], 0, c["to"], 0)
+		
 		node.associated_graph_node.queue_free()
 
 func _on_node_in_tree_renamed(node):
