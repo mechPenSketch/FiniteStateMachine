@@ -114,6 +114,7 @@ func _on_node_added_to_tree(node):
 		fsm_title.set_text(node.get_name())
 		gfe_instance.get_zoom_hbox().add_child(fsm_title)
 		gfe_instance.get_zoom_hbox().move_child(fsm_title, 0)
+		gfe_instance.title = fsm_title
 		
 		# REARRANGE PLACEMENT
 		var selfnode_pos = node.get_position_in_parent()
@@ -156,7 +157,11 @@ func _on_node_removed_from_tree(node):
 		node.associated_graph_node.queue_free()
 
 func _on_node_in_tree_renamed(node):
-	pass
+	if node is FSM:
+		node.associate_graph_edit.title.set_text(node.get_name())
+		
+	elif node is FSM_Component:
+		node.associated_graph_node.set_name(node.get_name())
 
 func _on_fsm_ready(fsm_node):
 	#	CONNECT EVERYTHING TOGETHER

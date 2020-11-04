@@ -2,6 +2,7 @@ tool
 extends GraphEdit
 
 var associated_fsm
+var title
 
 func _on_connection_request(str_from, from_port, str_to, to_port):
 	var gn_from = get_node(str_from)
