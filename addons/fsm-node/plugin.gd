@@ -106,7 +106,7 @@ func _on_node_added_to_tree(node):
 		# ADD NEW FSM GRAPH
 		var gfe_instance = GraphFsmEdit.instance()
 		graph_fsm_edit_root.add_child(gfe_instance)
-		node.associate_graph_edit = gfe_instance
+		node.associated_graph_edit = gfe_instance
 		gfe_instance.set_associated_fsm(node)
 		
 		# GIVE IT A LABEL
@@ -115,26 +115,11 @@ func _on_node_added_to_tree(node):
 		gfe_instance.get_zoom_hbox().add_child(fsm_title)
 		gfe_instance.get_zoom_hbox().move_child(fsm_title, 0)
 		gfe_instance.title = fsm_title
-		
-		# REARRANGE PLACEMENT
-		var selfnode_pos = node.get_position_in_parent()
-		var selfgraph_indx = gfe_instance.get_index()
-		var target_indx
-		for i in range(selfgraph_indx-1, 0, -1):
-			if graph_fsm_edit_root.get_child(i).associated_fsm.get_position_in_parent() > selfnode_pos:
-				target_indx = i
-			else:
-				break
-		if target_indx != null:
-			graph_fsm_edit_root.move_child(gfe_instance, target_indx)
-			
-		# PREPARE IT TO GET CONNECTED
-		node.connect("ready", self, "_on_fsm_ready", [node], CONNECT_ONESHOT)
 	
 	elif node is FSM_Component:
 		var parent = node.get_parent()
 		if parent is FSM:
-			var gfe = parent.associate_graph_edit
+			var gfe = parent.associated_graph_edit
 			
 			var is_state = node is State
 			add_graph_node("state" if is_state else "transition", gfe, node)
@@ -151,13 +136,15 @@ func _on_node_added_to_tree(node):
 
 func _on_node_removed_from_tree(node):
 	if node is FSM:
-		node.associate_graph_edit.queue_free()
+		var gfe = node.associated_graph_edit
+		graph_fsm_edit_root.remove_child(gfe)
+		gfe.queue_free()
 		
 	elif node is FSM_Component:
 		# DISCONNECT FROM AFFECTED NODE
 		var parent = node.get_parent()
 		if parent is FSM:
-			var parent_edit = parent.associate_graph_edit
+			var parent_edit = parent.associated_graph_edit
 			var node_name = node.get_name()
 			for c in parent_edit.get_connection_list():
 				if c["from"] == node_name or c["to"] == node_name:
@@ -167,15 +154,10 @@ func _on_node_removed_from_tree(node):
 
 func _on_node_in_tree_renamed(node):
 	if node is FSM:
-		node.associate_graph_edit.title.set_text(node.get_name())
+		node.associated_graph_edit.title.set_text(node.get_name())
 		
 	elif node is FSM_Component:
 		node.associated_graph_node.set_name(node.get_name())
-
-func _on_fsm_ready(fsm_node):
-	#	CONNECT EVERYTHING TOGETHER
-	for c in fsm_node.connections:
-		fsm_node.associate_graph_edit.connect_node(c["from"].get_name(), 0, c["to"].get_name(), 0)
 
 func add_graph_node(key, fsm_root, base):
 	var gn = GraphNodes[key].instance()
@@ -185,5 +167,5 @@ func add_graph_node(key, fsm_root, base):
 	
 	gn.set_offset(base.graph_offset)
 	gn.set_name(base.get_name())
-
+	
 # INTERFACE INTERACTIONS
