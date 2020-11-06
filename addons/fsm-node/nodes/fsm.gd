@@ -12,41 +12,52 @@ var associated_graph_edit
 var connections = []
 
 func _ready():
-	# If this is not called in the editor
-	if !Engine.editor_hint:
 	
-		# If the starting_state is defnied, we'll use it
+	# IF THIS IS CALLED IN THE EDITOR
+	if Engine.editor_hint:
+		
+		# CONNECT EVERYTHING TOGETHER
+		for c in connections:
+			associated_graph_edit.connect_node(c["from"].get_name(), 0, c["to"].get_name(), 0)
+	
+	# IF THIS IS NOT CALLED IN THE EDITOR
+	else:
+		
+		# IF THE starting_state IS DEFNIED, WE'LL USE IT
 		if starting_state:
 			current_state = get_node(starting_state)
 			current_state.set_active(true)
 	
-		# Otherwise, we'll use the first state in our children
+		# OTHERWISE, WE'LL USE THE FIRST STATE IN OUR CHILDREN
 		else:
 			for c in get_children():
 				if c.is_class("State"):
 					current_state = c
 					c.set_active(true)
 					break
+
+func _notification(what):
+	if Engine.editor_hint:
+		match what:
+			
+			NOTIFICATION_MOVED_IN_PARENT:
 					
-	# REARRANGE PLACEMENT
-	var gfe = associated_graph_edit
-	var selfgraph_indx = gfe.get_index()
-	if selfgraph_indx > 0:
-		var countdown_start = selfgraph_indx - 1
-		var target_indx = selfgraph_indx
-		var graph_fsm_edit_root = associated_graph_edit.get_parent()
-		for i in range(countdown_start, -1, -1):
-			var compared_node = graph_fsm_edit_root.get_child(i).associated_fsm
-			if node_is_higher(self, compared_node):
-				target_indx = i
-			else:
-				break
-		if target_indx != selfgraph_indx:
-			graph_fsm_edit_root.move_child(gfe, target_indx)
-	
-	# CONNECT EVERYTHING TOGETHER
-	for c in connections:
-		associated_graph_edit.connect_node(c["from"].get_name(), 0, c["to"].get_name(), 0)
+				# REARRANGE PLACEMENT
+				#	IF IT HAS GRAPHEDIT COUNTERPART
+				if associated_graph_edit:
+					var selfgraph_indx = associated_graph_edit.get_index()
+					if selfgraph_indx > 0:
+						var countdown_start = selfgraph_indx - 1
+						var target_indx = selfgraph_indx
+						var graph_fsm_edit_root = associated_graph_edit.get_parent()
+						for i in range(countdown_start, -1, -1):
+							var compared_node = graph_fsm_edit_root.get_child(i).associated_fsm
+							if node_is_higher(self, compared_node):
+								target_indx = i
+							else:
+								break
+						if target_indx != selfgraph_indx:
+							graph_fsm_edit_root.move_child(associated_graph_edit, target_indx)
 
 func _get_configuration_warning():
 	# to get called by update_configuration_warning() when there's a change in tree
@@ -82,8 +93,7 @@ func node_is_higher(node_a, node_b):
 			# NODE B MUST BE CHILD OF NODE A
 			return true
 		2:
-			print(node_a.get_index())
-			print(node_b.get_index())
+			# NODES A AND B MUST BE SIBLINGS
 			return node_a.get_index() < node_b.get_index()
 		_:
 			var array_d = []
