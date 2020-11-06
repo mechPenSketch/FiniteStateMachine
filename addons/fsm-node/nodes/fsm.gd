@@ -87,28 +87,34 @@ func is_class(c):
 func node_is_higher(node_a, node_b):
 	var rel_path = node_a.get_path_to(node_b)
 	var count = rel_path.get_name_count()
+	var array_d = []
+	var node_c
 	
-	match count:
-		1:
-			# NODE B MUST BE CHILD OF NODE A
-			return true
-		2:
-			# NODES A AND B MUST BE SIBLINGS
-			return node_a.get_index() < node_b.get_index()
-		_:
-			var array_d = []
-
-			for i in count:
-				var n = rel_path.get_name(i)
+	for i in count:
+		var n = rel_path.get_name(i)
+		array_d += [n]
 		
-				array_d += [n]
-				if n != "..":
+		if n == "..":
+			# IF IT'S THE LAST ELEMENT OF THE LIST
+			if i == count - 1:
+				# NODE B MUST BE THE (GRAND)PARENT OF NODE A
+				return false
+		else:
+			match i:
+				0:
+					# NODE B MUST BE THE (GRAND)CHILD OF NODE A
+					return true
+				1:
+					# B OR ITS (GRAND)PARENT MUST BE THE SIBLING OF A
+					node_c = node_a
 					break
-
-			var array_c = array_d.slice(0, array_d.size() - 3)
-			var np_c = PoolStringArray(array_c).join("/")
-			var node_c = node_a.get_node(np_c)
-			var np_d = PoolStringArray(array_d).join("/")
-			var node_d = node_a.get_node(np_d)
+				_:
+					# FIND THE HIGHEST PARENT WHERE THEY ARE SIBLINGS TO BE COMPARED TO
+					var array_c = array_d.slice(0, array_d.size() - 3)
+					var np_c = PoolStringArray(array_c).join("/")
+					node_c = node_a.get_node(np_c)
+					break
 	
-			return node_c.get_index() < node_d.get_index()
+	var np_d = PoolStringArray(array_d).join("/")
+	var node_d = node_a.get_node(np_d)
+	return node_c.get_index() < node_d.get_index()
