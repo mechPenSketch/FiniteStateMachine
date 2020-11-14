@@ -9,7 +9,7 @@ func _on_connection_request(str_from, from_port, str_to, to_port):
 	var gn_to = get_node(str_to)
 	var nd_from = gn_from.associated_component
 	
-	var connection_type = gn_from.get_connection_input_type(0)
+	var connection_type = gn_from.get_connection_output_type(0)
 	if connection_type == 1:
 		# STATE TO TRANSITION
 		#	GET RELATIVE NODEPATH
