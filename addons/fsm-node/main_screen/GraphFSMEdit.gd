@@ -23,6 +23,9 @@ func _on_connection_request(str_from, from_port, str_to, to_port):
 			if connect_node(str_from, from_port, str_to, to_port) == OK:
 				# ADD TRANSITION TO THE LIST
 				nd_from.transitions += [target_np]
+						
+				# UPDATE PROPERTY LIST
+				nd_from.property_list_changed_notify()
 		else:
 			# TRANSITION TO STATE
 			
@@ -38,6 +41,9 @@ func _on_connection_request(str_from, from_port, str_to, to_port):
 					if connect_node(str_from, from_port, str_to, to_port) == OK:
 						# SET TARGET STATE
 						nd_from.target_state = nd_from.get_path_to(gn_to.associated_component)
+						
+						# UPDATE PROPERTY LIST
+						nd_from.property_list_changed_notify()
 
 func set_associated_fsm(node):
 	associated_fsm = node
