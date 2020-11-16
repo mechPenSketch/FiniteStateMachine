@@ -35,7 +35,7 @@ func _on_connection_request(str_from, from_port, str_to, to_port):
 				if c["from"] == str_from or c["to"] == str_to:
 					
 					# DISCONNECT FROM THAT NODE
-					disconnect_node(c["from"], c["from_port"], c["to"], c["to_port"])
+					_on_disconnection_request(c["from"], c["from_port"], c["to"], c["to_port"])
 					
 					#	IF THE CONNECTION IS SUCESSFULLY MADE,
 					if connect_node(str_from, from_port, str_to, to_port) == OK:
@@ -45,5 +45,25 @@ func _on_connection_request(str_from, from_port, str_to, to_port):
 						# UPDATE PROPERTY LIST
 						nd_from.property_list_changed_notify()
 
+func _on_disconnection_request(str_from, from_port, str_to, to_port):
+	disconnect_node(str_from, from_port, str_to, to_port)
+	
+	var gn_from = get_node(str_from)
+	var nd_from = gn_from.associated_component
+	var connection_type = gn_from.get_connection_output_type(0)
+	if connection_type == 1:
+		# STATE TO TRANSITION
+		var gn_to = get_node(str_to)
+		var nd_to = gn_to.associated_component
+		#	GET RELATIVE NODEPATH
+		var target_np = nd_from.get_path_to(nd_to)
+		nd_from.transitions.erase(target_np)
+	else:
+		# TRANSITION TO STATE
+		nd_from.target_state = null
+		
+	# UPDATE PROPERTY LIST
+	nd_from.property_list_changed_notify()
+	
 func set_associated_fsm(node):
 	associated_fsm = node
