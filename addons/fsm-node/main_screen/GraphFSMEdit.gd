@@ -37,13 +37,13 @@ func _on_connection_request(str_from, from_port, str_to, to_port):
 					# DISCONNECT FROM THAT NODE
 					_on_disconnection_request(c["from"], c["from_port"], c["to"], c["to_port"])
 					
-					#	IF THE CONNECTION IS SUCESSFULLY MADE,
-					if connect_node(str_from, from_port, str_to, to_port) == OK:
-						# SET TARGET STATE
-						nd_from.target_state = nd_from.get_path_to(gn_to.associated_component)
-						
-						# UPDATE PROPERTY LIST
-						nd_from.property_list_changed_notify()
+			#	IF THE CONNECTION IS SUCESSFULLY MADE,
+			if connect_node(str_from, from_port, str_to, to_port) == OK:
+				# SET TARGET STATE
+				nd_from.target_state = nd_from.get_path_to(gn_to.associated_component)
+				
+				# UPDATE PROPERTY LIST
+				nd_from.property_list_changed_notify()
 
 func _on_disconnection_request(str_from, from_port, str_to, to_port):
 	disconnect_node(str_from, from_port, str_to, to_port)
