@@ -19,6 +19,9 @@ func _ready():
 		# CONNECT EVERYTHING TOGETHER
 		for c in connections:
 			associated_graph_edit.connect_node(c["from"].get_name(), 0, c["to"].get_name(), 0)
+		
+		# CALL _ready() AGAIN FOR WHEN THE SCENE CHANGES
+		request_ready()
 	
 	# IF THIS IS NOT CALLED IN THE EDITOR
 	else:
