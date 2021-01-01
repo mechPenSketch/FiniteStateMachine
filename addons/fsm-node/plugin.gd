@@ -4,6 +4,12 @@ extends EditorPlugin
 var MainPanel = preload("main_screen/MainPanel.tscn")
 var main_panel_instance
 
+var behind_popup
+var PopupNewState = preload("res://addons/fsm-node/popups/NewState.tscn")
+var PopupNewTransition = preload("res://addons/fsm-node/popups/NewTransition.tscn")
+var popup_new_state
+var popup_new_transition
+
 var graph_fsm_edit_root
 var GraphFsmEdit = preload("main_screen/GraphFSMEdit.tscn")
 var GraphNodes = {"state": preload("main_screen/graph_nodes/GraphState.tscn"),
@@ -51,6 +57,15 @@ func _enter_tree():
 	for k in toolbar_btns.keys():
 		toolbar_btns[k].connect("pressed", self, toolbar_btns_pressed_methods[k])
 	
+	# ADD POPUP DIALOGS
+	behind_popup = get_script_create_dialog().get_parent()
+	popup_new_state = PopupNewState.instance()
+	behind_popup.add_child(popup_new_state)
+	popup_new_state.connect("confirmed", self, "_make_new_state")
+	popup_new_transition = PopupNewTransition.instance()
+	behind_popup.add_child(popup_new_transition)
+	popup_new_transition.connect("confirmed", self, "_make_new_transition")
+	
 	# GRAPHWORKS
 	graph_fsm_edit_root = main_panel_instance.get_node("ScrollContainer/VBoxContainer")
 	get_tree().connect("node_added", self, "_on_node_added_to_tree")
@@ -58,12 +73,18 @@ func _enter_tree():
 	get_tree().connect("node_renamed", self, "_on_node_in_tree_renamed")
 
 func _exit_tree():
+	
+	# ADD POPUP DIALOGS
+	popup_new_transition.queue_free()
+	popup_new_state.queue_free()
+	
 	# DISCONNECT SIGNALS
 	for k in toolbar_btns.keys():
 		toolbar_btns[k].disconnect("pressed", self, toolbar_btns_pressed_methods[k])
 	
 	toolbar_btns = {}
 	
+	# REMOVE MAIN PANEL
 	if main_panel_instance:
 		main_panel_instance.queue_free()
 
@@ -94,9 +115,15 @@ func _on_transition_pressed(b):
 	select_transition = b
 
 func _on_addstate_pressed():
-	pass
+	popup_new_state.popup_centered()
 	
 func _on_addtransition_pressed():
+	popup_new_transition.popup_centered()
+
+func _make_new_state():
+	pass
+
+func _make_new_transition():
 	pass
 
 # GRAPHWORKS
