@@ -1,6 +1,8 @@
 tool
 extends EditorPlugin
 
+var editor_selection
+
 var MainPanel = preload("main_screen/MainPanel.tscn")
 var main_panel_instance
 
@@ -9,6 +11,7 @@ var PopupNewState = preload("res://addons/fsm-node/popups/NewState.tscn")
 var PopupNewTransition = preload("res://addons/fsm-node/popups/NewTransition.tscn")
 var popup_new_state
 var popup_new_transition
+var parent_fsm
 
 var graph_fsm_edit_root
 var GraphFsmEdit = preload("main_screen/GraphFSMEdit.tscn")
@@ -23,6 +26,9 @@ var select_state:bool = true
 var select_transition:bool = true
 
 func _enter_tree():
+	editor_selection = get_editor_interface().get_selection()
+	editor_selection.connect("selection_changed", self, "_on_selection_changed")
+	
 	# SET UP MAIN SCREEN
 	main_panel_instance = MainPanel.instance()
 	get_editor_interface().get_editor_viewport().add_child(main_panel_instance)
@@ -74,7 +80,7 @@ func _enter_tree():
 
 func _exit_tree():
 	
-	# ADD POPUP DIALOGS
+	# REMOVE POPUP DIALOGS
 	popup_new_transition.queue_free()
 	popup_new_state.queue_free()
 	
@@ -87,6 +93,8 @@ func _exit_tree():
 	# REMOVE MAIN PANEL
 	if main_panel_instance:
 		main_panel_instance.queue_free()
+	
+	editor_selection.disconnect("selection_changed", self, "_on_selection_changed")
 
 func get_plugin_icon():
 	return preload("main_screen/icon.svg")
@@ -102,6 +110,19 @@ func make_visible(visible):
 		main_panel_instance.visible = visible
 
 # TOOLBAR BUTTON FUNCTIONS
+func _on_selection_changed():
+	for n in editor_selection.get_selected_nodes():
+		if n is FSM:
+			parent_fsm = n
+			set_add_component_disabled(false)
+			return
+		elif n is FSM_Component:
+			parent_fsm = n.get_parent()
+			set_add_component_disabled(false)
+			return
+	
+	set_add_component_disabled(true)
+
 func _on_select_pressed():
 	tool_mode = TOOL_SELECT
 	
@@ -121,10 +142,38 @@ func _on_addtransition_pressed():
 	popup_new_transition.popup_centered()
 
 func _make_new_state():
-	pass
+	# GENERATE NEW EVENT
+	var inst_state = State.new()
+	
+	#	NAME OF NEW EVENT
+	var nd_input = popup_new_state.find_node("Name")
+	var new_name = nd_input.get_text()
+	if new_name:
+		inst_state.set_name(new_name)
+		
+		# CLEAR INPUT
+		nd_input.clear()
+	parent_fsm.add_child(inst_state)
+	inst_state.set_owner(get_tree().get_edited_scene_root())
 
 func _make_new_transition():
-	pass
+	# GENERATE NEW EVENT
+	var inst_state = Transition.new()
+	
+	#	NAME OF NEW EVENT
+	var nd_input = popup_new_transition.find_node("Name")
+	var new_name = nd_input.get_text()
+	if new_name:
+		inst_state.set_name(new_name)
+		
+		# CLEAR INPUT
+		nd_input.clear()
+	parent_fsm.add_child(inst_state)
+	inst_state.set_owner(get_tree().get_edited_scene_root())
+
+func set_add_component_disabled(b:bool):
+	toolbar_btns["addstate"].set_disabled(b)
+	toolbar_btns["addtransition"].set_disabled(b)
 
 # GRAPHWORKS
 func _on_node_added_to_tree(node):
