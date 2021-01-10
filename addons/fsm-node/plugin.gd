@@ -191,6 +191,9 @@ func _on_node_added_to_tree(node):
 		gfe_instance.get_zoom_hbox().add_child(fsm_title)
 		gfe_instance.get_zoom_hbox().move_child(fsm_title, 0)
 		gfe_instance.title = fsm_title
+		
+		# CONNECT SIGNALS
+		gfe_instance.connect("gui_input", self, "_on_fsm_input", [gfe_instance])
 	
 	elif node is FSM_Component:
 		var parent = node.get_parent()
@@ -245,3 +248,8 @@ func add_graph_node(key, fsm_root, base):
 	gn.set_name(base.get_name())
 	
 # INTERFACE INTERACTIONS
+func _on_fsm_input(event, fg):
+	if event is InputEventMouseButton:
+		if event.is_pressed() and event.button_index == BUTTON_RIGHT:
+			parent_fsm = fg.associated_fsm
+			popup_new_state.popup_centered()
