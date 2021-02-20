@@ -115,6 +115,7 @@ func _on_selection_changed():
 		if n is FSM:
 			parent_fsm = n
 			set_add_component_disabled(false)
+			get_editor_interface().set_main_screen_editor("FSM")
 			return
 		elif n is FSM_Component:
 			parent_fsm = n.get_parent()
