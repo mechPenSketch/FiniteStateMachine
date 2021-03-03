@@ -16,11 +16,6 @@ After adding FSM, add States and Transitions as its children Nodes.
 
 Upon running the project, all States deactivate their process functions, and all Transitions disconnect their incoming signals. The FSM will keep one State activated and re-connect the incoming signals of the Transitions connected to the State.
 
-## Contribution
-If you find this helpful, please support me financially so that I can earn a living making Godot Assets:
-
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I3I1208SA)
-
 ## Author
 * mechPenSketch
 
