@@ -42,12 +42,14 @@ func _enter_tree():
 		"state":  main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer2/State"),
 		"transition":  main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer2/Transition"),
 		"addstate": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer3/AddState"),
-		"addtransition": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer3/AddTransition")
+		"addtransition": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer3/AddTransition"),
+		"remove": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer3/Remove")
 	}
 	
 	#	REUSE GODOT ICONS
 	toolbar_btns["select"].set_button_icon(get_editor_interface().get_base_control().get_icon("ToolSelect", "EditorIcons"))
 	toolbar_btns["move"].set_button_icon(get_editor_interface().get_base_control().get_icon("ToolMove", "EditorIcons"))
+	toolbar_btns["remove"].set_button_icon(get_editor_interface().get_base_control().get_icon("Remove", "EditorIcons"))
 	
 	#	DEFINE PRESS METHODS
 	toolbar_btns_pressed_methods = {
@@ -56,7 +58,8 @@ func _enter_tree():
 		"state": "_on_state_pressed",
 		"transition": "_on_transition_pressed",
 		"addstate": "_on_addstate_pressed",
-		"addtransition": "_on_addtransition_pressed"
+		"addtransition": "_on_addtransition_pressed",
+		"remove": "_on_remove_pressed"
 	}
 	
 	#	CONNECT SIGNALS
@@ -142,6 +145,9 @@ func _on_addstate_pressed():
 func _on_addtransition_pressed():
 	popup_new_transition.popup_centered()
 
+func _on_remove_pressed():
+	pass
+
 func _make_new_state():
 	# GENERATE NEW EVENT
 	var inst_state = State.new()
@@ -175,6 +181,7 @@ func _make_new_transition():
 func set_add_component_disabled(b:bool):
 	toolbar_btns["addstate"].set_disabled(b)
 	toolbar_btns["addtransition"].set_disabled(b)
+	toolbar_btns["remove"].set_disabled(b)
 
 # GRAPHWORKS
 func _on_node_added_to_tree(node):

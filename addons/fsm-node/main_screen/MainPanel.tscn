@@ -87,7 +87,7 @@ margin_bottom = 24.0
 custom_constants/separation = 0
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_right = 62.0
+margin_right = 80.0
 margin_bottom = 24.0
 custom_constants/separation = 6
 __meta__ = {
@@ -106,6 +106,14 @@ margin_right = 62.0
 margin_bottom = 24.0
 disabled = true
 icon = ExtResource( 7 )
+
+[node name="Remove" type="ToolButton" parent="MarginContainer/HBoxContainer/HBoxContainer3"]
+margin_left = 68.0
+margin_right = 80.0
+margin_bottom = 24.0
+disabled = true
+toggle_mode = true
+group = SubResource( 1 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_top = 26.0
