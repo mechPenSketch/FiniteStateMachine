@@ -112,7 +112,6 @@ margin_left = 68.0
 margin_right = 80.0
 margin_bottom = 24.0
 disabled = true
-toggle_mode = true
 group = SubResource( 1 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
