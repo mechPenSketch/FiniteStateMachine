@@ -119,13 +119,16 @@ func _on_selection_changed():
 			parent_fsm = n
 			set_add_component_disabled(false)
 			get_editor_interface().set_main_screen_editor("FSM")
+			toolbar_btns["remove"].set_disabled(true)
 			return
 		elif n is FSM_Component:
 			parent_fsm = n.get_parent()
 			set_add_component_disabled(false)
+			toolbar_btns["remove"].set_disabled(false)
 			return
 	
 	set_add_component_disabled(true)
+	toolbar_btns["remove"].set_disabled(true)
 
 func _on_select_pressed():
 	tool_mode = TOOL_SELECT
@@ -146,7 +149,9 @@ func _on_addtransition_pressed():
 	popup_new_transition.popup_centered()
 
 func _on_remove_pressed():
-	pass
+	for n in editor_selection.get_selected_nodes():
+		if n is FSM_Component:
+			n.queue_free()
 
 func _make_new_state():
 	# GENERATE NEW EVENT
@@ -181,7 +186,6 @@ func _make_new_transition():
 func set_add_component_disabled(b:bool):
 	toolbar_btns["addstate"].set_disabled(b)
 	toolbar_btns["addtransition"].set_disabled(b)
-	toolbar_btns["remove"].set_disabled(b)
 
 # GRAPHWORKS
 func _on_node_added_to_tree(node):
