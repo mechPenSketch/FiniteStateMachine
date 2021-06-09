@@ -13,6 +13,8 @@ var popup_new_state
 var popup_new_transition
 var new_offset
 var parent_fsm
+var new_connection = {}
+signal new_comp
 
 var graph_fsm_edit_root
 var GraphFsmEdit = preload("main_screen/GraphFSMEdit.tscn")
@@ -163,6 +165,7 @@ func _make_new_state():
 	var new_name = nd_input.get_text()
 	if new_name:
 		inst_state.set_name(new_name)
+		new_connection["new"] = new_name
 		
 		# CLEAR INPUT
 		nd_input.clear()
@@ -174,6 +177,7 @@ func _make_new_state():
 	
 	parent_fsm.add_child(inst_state)
 	inst_state.set_owner(get_tree().get_edited_scene_root())
+	emit_signal("new_comp")
 
 func _make_new_transition():
 	# GENERATE NEW EVENT
@@ -184,6 +188,7 @@ func _make_new_transition():
 	var new_name = nd_input.get_text()
 	if new_name:
 		inst_state.set_name(new_name)
+		new_connection["new"] = new_name
 		
 		# CLEAR INPUT
 		nd_input.clear()
@@ -195,6 +200,7 @@ func _make_new_transition():
 	
 	parent_fsm.add_child(inst_state)
 	inst_state.set_owner(get_tree().get_edited_scene_root())
+	emit_signal("new_comp")
 
 func set_add_component_disabled(b:bool):
 	toolbar_btns["addstate"].set_disabled(b)
@@ -219,8 +225,8 @@ func _on_node_added_to_tree(node):
 		
 		# CONNECT SIGNALS
 		gfe_instance.connect("gui_input", self, "_on_fsm_input", [gfe_instance])
-		gfe_instance.connect("connection_from_empty", self, "_empty_connect", [gfe_instance])
-		gfe_instance.connect("connection_to_empty", self, "_empty_connect", [gfe_instance])
+		gfe_instance.connect("connection_from_empty", self, "_on_connect_from_empty", [gfe_instance])
+		gfe_instance.connect("connection_to_empty", self, "_on_connect_to_empty", [gfe_instance])
 	
 	elif node is FSM_Component:
 		var parent = node.get_parent()
@@ -275,16 +281,22 @@ func add_graph_node(key, fsm_root, base):
 	gn.set_name(base.get_name())
 	
 # INTERFACE INTERACTIONS
-func _empty_connect(port, _port_int, release_pos, fg):
-	print(port)
-	# GET NEW OFFSET
-	new_offset = release_pos
-	parent_fsm = fg.associated_fsm
+func _cancel_node_connection():
+	clear_new_connection()
 	
-	if parent_fsm.get_node(port) is State:
-		popup_new_transition.popup_centered()
-	else:
-		popup_new_state.popup_centered()
+func _connect_new_to_old():
+	parent_fsm.associated_graph_edit.connect_node(new_connection["new"], 0, new_connection["old"], 0)
+	clear_new_connection()
+
+func _connect_old_to_new():
+	parent_fsm.associated_graph_edit.connect_node(new_connection["old"], 0, new_connection["new"], 0)
+	clear_new_connection()
+
+func _on_connect_from_empty(from, _fr_sl, release_pos, fg):
+	empty_connect(from, release_pos, fg, true)
+	
+func _on_connect_to_empty(from, _fr_sl, release_pos, fg):
+	empty_connect(from, release_pos, fg, false)
 	
 func _on_fsm_input(event, fg):
 	if event is InputEventMouseButton:
@@ -292,3 +304,27 @@ func _on_fsm_input(event, fg):
 			new_offset = event.get_position()
 			parent_fsm = fg.associated_fsm
 			popup_new_state.popup_centered()
+
+func clear_new_connection():
+	disconnect("new_comp", self, new_connection["method"])
+	new_connection["popup"].get_cancel().disconnect("pressed", self, "_cancel_node_connection")
+	
+	new_connection.clear()
+
+func empty_connect(port, release_pos, fg, is_from):
+	# GET NEW OFFSET
+	new_offset = release_pos
+	parent_fsm = fg.associated_fsm
+	
+	if parent_fsm.get_node(port) is State:
+		new_connection["popup"] = popup_new_transition
+	else:
+		new_connection["popup"] = popup_new_state
+	
+	new_connection["method"] = "_connect_new_to_old" if is_from else "_connect_old_to_new"
+	
+	new_connection["old"] = port
+	
+	new_connection["popup"].popup_centered()
+	connect("new_comp", self, new_connection["method"])
+	new_connection["popup"].get_cancel().connect("pressed", self, "_cancel_node_connection")
