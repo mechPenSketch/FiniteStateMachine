@@ -11,6 +11,7 @@ var PopupNewState = preload("res://addons/fsm-node/popups/NewState.tscn")
 var PopupNewTransition = preload("res://addons/fsm-node/popups/NewTransition.tscn")
 var popup_new_state
 var popup_new_transition
+var new_offset
 var parent_fsm
 
 var graph_fsm_edit_root
@@ -165,6 +166,12 @@ func _make_new_state():
 		
 		# CLEAR INPUT
 		nd_input.clear()
+		
+	#	SET OFFSET
+	if new_offset:
+		inst_state.graph_offset = new_offset
+		new_offset = Vector2()
+	
 	parent_fsm.add_child(inst_state)
 	inst_state.set_owner(get_tree().get_edited_scene_root())
 
@@ -180,6 +187,12 @@ func _make_new_transition():
 		
 		# CLEAR INPUT
 		nd_input.clear()
+		
+	#	SET OFFSET
+	if new_offset:
+		inst_state.graph_offset = new_offset
+		new_offset = Vector2()
+	
 	parent_fsm.add_child(inst_state)
 	inst_state.set_owner(get_tree().get_edited_scene_root())
 
@@ -206,6 +219,8 @@ func _on_node_added_to_tree(node):
 		
 		# CONNECT SIGNALS
 		gfe_instance.connect("gui_input", self, "_on_fsm_input", [gfe_instance])
+		gfe_instance.connect("connection_from_empty", self, "_empty_connect", [gfe_instance])
+		gfe_instance.connect("connection_to_empty", self, "_empty_connect", [gfe_instance])
 	
 	elif node is FSM_Component:
 		var parent = node.get_parent()
@@ -260,8 +275,12 @@ func add_graph_node(key, fsm_root, base):
 	gn.set_name(base.get_name())
 	
 # INTERFACE INTERACTIONS
+func _empty_connect(port, _port_int, release_pos, fg):
+	pass
+	
 func _on_fsm_input(event, fg):
 	if event is InputEventMouseButton:
 		if event.is_pressed() and event.button_index == BUTTON_RIGHT:
+			new_offset = event.get_position()
 			parent_fsm = fg.associated_fsm
 			popup_new_state.popup_centered()
