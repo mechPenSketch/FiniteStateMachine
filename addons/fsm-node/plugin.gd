@@ -276,7 +276,15 @@ func add_graph_node(key, fsm_root, base):
 	
 # INTERFACE INTERACTIONS
 func _empty_connect(port, _port_int, release_pos, fg):
-	pass
+	print(port)
+	# GET NEW OFFSET
+	new_offset = release_pos
+	parent_fsm = fg.associated_fsm
+	
+	if parent_fsm.get_node(port) is State:
+		popup_new_transition.popup_centered()
+	else:
+		popup_new_state.popup_centered()
 	
 func _on_fsm_input(event, fg):
 	if event is InputEventMouseButton:
