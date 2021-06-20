@@ -1,0 +1,55 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform bool is_hovered;
+uniform bool hover_is_right;
+
+uniform vec4 base_color: hint_color;
+uniform sampler2D left;
+uniform sampler2D right;
+
+void fragment(){
+	if(is_hovered){
+		vec4 d4 = abs(COLOR - base_color);
+		float d = max(max(d4.r, d4.g), d4.b);
+		
+		vec4 whitening;
+		if(hover_is_right){
+			whitening = texture(right, UV);
+		}else{
+			whitening = texture(left, UV);
+		}
+		
+		if(d < 0.3){
+			COLOR.r += (1.0 - COLOR.r) * whitening.r;
+			COLOR.g += (1.0 - COLOR.g) * whitening.g;
+			COLOR.b += (1.0 - COLOR.b) * whitening.b;
+		}
+	}
+}"
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.5, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+width = 256
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0, 0.5, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+width = 256
+
+[resource]
+shader = SubResource( 1 )
+shader_param/is_hovered = false
+shader_param/hover_is_right = false
+shader_param/base_color = Color( 0.466667, 0.192157, 0.356863, 1 )
+shader_param/left = SubResource( 3 )
+shader_param/right = SubResource( 5 )

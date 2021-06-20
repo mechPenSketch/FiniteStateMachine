@@ -1,22 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/fsm-node/main_screen/graph_nodes/StateTheme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/fsm-node/main_screen/graph_nodes/ComponentGraphNode.gd" type="Script" id=2]
-
-[sub_resource type="Gradient" id=1]
-offsets = PoolRealArray( 0, 0.5, 1 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
-width = 256
-
-[sub_resource type="StyleBoxTexture" id=3]
-texture = SubResource( 2 )
-region_rect = Rect2( 64, 0, 128, 1 )
-margin_top = 0.665482
+[ext_resource path="res://addons/fsm-node/main_screen/graph_nodes/HoverStateShader.tres" type="Material" id=3]
 
 [node name="State" type="GraphNode"]
+material = ExtResource( 3 )
 margin_right = 57.0
 margin_bottom = 38.0
 mouse_filter = 1
@@ -32,7 +21,6 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-hover_left = SubResource( 3 )
 
 [node name="Name" type="Label" parent="."]
 margin_left = 5.0

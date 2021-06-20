@@ -5,8 +5,6 @@ var associated_component:Node
 
 var is_connectable = true
 
-export(StyleBox) var hover_left
-
 func _gui_input(e):
 	
 	if is_connectable:

@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/fsm-node/main_screen/graph_nodes/TransitionTheme.tres" type="Theme" id=1]
 [ext_resource path="res://addons/fsm-node/main_screen/graph_nodes/ComponentGraphNode.gd" type="Script" id=2]
+[ext_resource path="res://addons/fsm-node/main_screen/graph_nodes/HoverTransitionShader.tres" type="Material" id=3]
 
 [node name="Transition" type="GraphNode"]
+material = ExtResource( 3 )
 margin_right = 103.0
 margin_bottom = 54.0
 mouse_filter = 1
