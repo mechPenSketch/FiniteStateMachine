@@ -47,9 +47,10 @@ gradient = SubResource( 4 )
 width = 256
 
 [resource]
+resource_local_to_scene = true
 shader = SubResource( 1 )
 shader_param/is_hovered = false
-shader_param/hover_is_right = false
+shader_param/hover_is_right = true
 shader_param/base_color = Color( 0.466667, 0.192157, 0.356863, 1 )
 shader_param/left = SubResource( 3 )
 shader_param/right = SubResource( 5 )

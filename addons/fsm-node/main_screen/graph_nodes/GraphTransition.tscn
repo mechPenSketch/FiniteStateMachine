@@ -38,3 +38,4 @@ __meta__ = {
 
 [connection signal="dragged" from="." to="." method="_on_dragged"]
 [connection signal="gui_input" from="." to="." method="_gui_input"]
+[connection signal="mouse_exited" from="." to="." method="_mouse_exited"]

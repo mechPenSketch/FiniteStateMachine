@@ -16,13 +16,20 @@ func _gui_input(e):
 			var width = get_size().x
 			
 			if mouse_x <= width / 4:
-				print("Left")
+				get_material().set_shader_param("is_hovered", true)
+				get_material().set_shader_param("hover_is_right", false)
 				if e is InputEventMouseButton and e.is_pressed():
 					print("connect from...")
 			elif mouse_x >= width * 0.75:
-				print("Right")
+				get_material().set_shader_param("is_hovered", true)
+				get_material().set_shader_param("hover_is_right", true)
 				if e is InputEventMouseButton and e.is_pressed():
 					print("connect to...")
+			else:
+				get_material().set_shader_param("is_hovered", false)
+
+func _mouse_exited():
+	get_material().set_shader_param("is_hovered", false)
 
 func _on_dragged(_from, to):
 	associated_component.graph_offset = to
