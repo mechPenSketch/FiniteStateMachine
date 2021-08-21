@@ -4,6 +4,18 @@ extends GraphEdit
 var associated_fsm
 var title
 
+func _is_in_input_hotzone(np_gn, _i, m_pos):
+	var graph_node = get_node(np_gn)
+	var rect2 = graph_node.get_rect()
+	print(rect2, m_pos)
+	return Rect2(rect2.position, rect2.size * Vector2(0.25, 1)).has_point(m_pos)
+
+func _is_in_output_hotzone(np_gn, _i, m_pos):
+	var graph_node = get_node(np_gn)
+	var rect2 = graph_node.get_rect()
+	var d_pos_x = rect2.size.x * 0.75
+	return Rect2(rect2.position + Vector2(d_pos_x, 0), rect2.size * Vector2(0.25, 1)).has_point(m_pos)
+
 func _on_connection_request(str_from, from_port, str_to, to_port):
 	
 	# IF THE CONNECTION IS NOT ALREADY MADE

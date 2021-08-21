@@ -8,23 +8,14 @@ var is_connectable = true
 func _gui_input(e):
 	
 	if is_connectable:
+		var mouse_position = e.get_position() + get_offset()
 		if e is InputEventMouse:
-			# GET MOUSE POSITION X
-			var mouse_x = e.get_position().x
-			
-			# GET WIDTH
-			var width = get_size().x
-			
-			if mouse_x <= width / 4:
+			if get_parent()._is_in_input_hotzone(get_path(), 0, mouse_position):
 				get_material().set_shader_param("is_hovered", true)
 				get_material().set_shader_param("hover_is_right", false)
-				if e is InputEventMouseButton and e.is_pressed():
-					print("connect from...")
-			elif mouse_x >= width * 0.75:
+			elif get_parent()._is_in_output_hotzone(get_path(), 0, mouse_position):
 				get_material().set_shader_param("is_hovered", true)
 				get_material().set_shader_param("hover_is_right", true)
-				if e is InputEventMouseButton and e.is_pressed():
-					print("connect to...")
 			else:
 				get_material().set_shader_param("is_hovered", false)
 
