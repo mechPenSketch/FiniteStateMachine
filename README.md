@@ -22,6 +22,11 @@ Upon running the project, all States deactivate their process functions, and all
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
+## Contributions
+In addition of sponsors, you can support me by buying by merch:
+* [Shirts](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=2) - [Phone Cases](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=1532) - [Pillows](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=585)
+* [Mugs](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=658) - [Pouches](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=1097) - [Bags](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=933)
+
 ## Acknowledgements
 * GDQuest and PigDev's youtube videos for helping me understand the concept of FSM better.
 * Using [FSM by kubecz3k](https://github.com/kubecz3k/FiniteStateMachine) also helps me understand the concept better.
