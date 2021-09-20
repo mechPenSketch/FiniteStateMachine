@@ -8,6 +8,8 @@ A Plugin with an FSM and its components State and Transition as Nodes.
 ### Installation
 After downloading, move the folder "addons/fsm-node" to your project folder.
 
+For additional script templates, move folder "script_templates" to your project folder as well.
+
 ## Usage
 After adding FSM, add States and Transitions as its children Nodes.
 
