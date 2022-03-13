@@ -25,7 +25,7 @@ Upon running the project, all States deactivate their process functions, and all
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Contributions
-In addition of sponsors, you can support me by buying by merch:
+In addition to sponsors, you can support me by buying these merch:
 * [Shirts](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=2) - [Phone Cases](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=1532) - [Pillows](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=585)
 * [Mugs](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=658) - [Pouches](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=1097) - [Bags](https://mechpensketch.creator-spring.com/listing/mechPenSketch-fsm?product=933)
 
