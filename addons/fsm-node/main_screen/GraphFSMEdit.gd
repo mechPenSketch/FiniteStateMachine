@@ -1,4 +1,4 @@
-tool
+@tool
 extends GraphEdit
 
 var associated_fsm

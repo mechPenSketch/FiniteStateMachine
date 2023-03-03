@@ -1,18 +1,18 @@
-tool
+@tool
+@icon("icons/state.svg")
+class_name State
 extends FSM_Component
 
-class_name State, "icons/state.svg"
-
-export(Array, NodePath) var transitions
+@export var transitions: Array[NodePath]
 var transition_nodes = []
 
 func _get_configuration_warning():
 	return "" if get_parent().is_class("FSM") else "Parent should be FSM."
 
 func _ready():
-	._ready()
+	super._ready()
 	
-	if !Engine.editor_hint:
+	if !Engine.is_editor_hint():
 		set_physics_process(false)
 		set_process(false)
 		set_process_input(false)
@@ -24,7 +24,6 @@ func get_class():
 	return "State"
 
 func set_active(b:bool):
-	print(String(b), get_name())
 	active = b
 	
 	set_physics_process(active)

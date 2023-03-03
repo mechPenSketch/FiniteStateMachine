@@ -1,10 +1,10 @@
-tool
+@tool
 extends GraphNode
 
 var associated_component:Node
 
 func _on_dragged(_from, to):
-	associated_component.graph_offset = to
+	associated_component.position_offset = to
 
 func set_comp_name(val):
 	$Name.set_text(val)

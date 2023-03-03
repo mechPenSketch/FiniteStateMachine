@@ -1,9 +1,9 @@
-tool
+@tool
+@icon("icons/transition.svg")
+class_name Transition
 extends FSM_Component
 
-class_name Transition, "icons/transition.svg"
-
-export (NodePath) var target_state
+@export var target_state: NodePath
 var target_state_node
 var incoming_signals
 
@@ -14,9 +14,9 @@ func _get_configuration_warning():
 	return "" if get_parent().is_class("FSM") else "Parent should be FSM."
 
 func _ready():
-	._ready()
+	super._ready()
 	
-	if !Engine.editor_hint:
+	if !Engine.is_editor_hint():
 		# TARGET STATE
 		target_state_node = get_node(target_state)
 		
