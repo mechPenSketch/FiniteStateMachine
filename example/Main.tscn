@@ -1,69 +1,72 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=19 format=3 uid="uid://bj2taa7a6niqg"]
 
-[ext_resource path="res://example/trafficlights.png" type="Texture" id=1]
-[ext_resource path="res://addons/fsm-node/nodes/fsm.gd" type="Script" id=2]
-[ext_resource path="res://addons/fsm-node/nodes/state.gd" type="Script" id=3]
-[ext_resource path="res://example/check_rd.png" type="Texture" id=4]
-[ext_resource path="res://example/check_r.png" type="Texture" id=5]
-[ext_resource path="res://example/check_g.png" type="Texture" id=6]
-[ext_resource path="res://example/check_gd.png" type="Texture" id=7]
-[ext_resource path="res://example/stopwatch-base.png" type="Texture" id=8]
-[ext_resource path="res://example/stopwatch-timer.png" type="Texture" id=9]
-[ext_resource path="res://example/stopwatch-number.png" type="Texture" id=10]
-[ext_resource path="res://addons/fsm-node/nodes/transition.gd" type="Script" id=11]
-[ext_resource path="res://example/tl_ap.gd" type="Script" id=12]
-[ext_resource path="res://example/sw_ap.gd" type="Script" id=13]
-[ext_resource path="res://example/check_btn.gd" type="Script" id=14]
+[ext_resource type="Texture2D" uid="uid://4734ywqbb7vs" path="res://example/trafficlights.png" id="1"]
+[ext_resource type="Script" path="res://addons/fsm-node/nodes/fsm.gd" id="2"]
+[ext_resource type="Script" path="res://addons/fsm-node/nodes/state.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://bxehomu78u268" path="res://example/stopwatch-base.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://bcsmi6n58j3yu" path="res://example/stopwatch-timer.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://dvq3awa4lmndc" path="res://example/stopwatch-number.png" id="10"]
+[ext_resource type="Script" path="res://addons/fsm-node/nodes/transition.gd" id="11"]
+[ext_resource type="Script" path="res://example/tl_ap.gd" id="12"]
+[ext_resource type="Script" path="res://example/sw_ap.gd" id="13"]
+[ext_resource type="Script" path="res://example/check_btn.gd" id="14"]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id="1"]
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ 3 ]
+"values": [3]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 step = 0.0833333
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ 1 ]
+"values": [1]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id="3"]
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ 2 ]
+"values": [2]
 }
 
-[sub_resource type="Theme" id=4]
-CheckButton/colors/font_color = Color( 1, 1, 1, 1 )
-CheckButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
-CheckButton/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
-CheckButton/colors/font_color_hover_pressed = Color( 1, 1, 1, 1 )
-CheckButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oxip4"]
+_data = {
+"Go": SubResource("1"),
+"Stop": SubResource("2"),
+"Wait": SubResource("3")
+}
+
+[sub_resource type="Theme" id="4"]
+CheckButton/colors/font_color = Color(1, 1, 1, 1)
+CheckButton/colors/font_color_disabled = Color(0.9, 0.9, 0.9, 0.2)
+CheckButton/colors/font_color_hover = Color(0.94, 0.94, 0.94, 1)
+CheckButton/colors/font_color_hover_pressed = Color(1, 1, 1, 1)
+CheckButton/colors/font_color_pressed = Color(1, 1, 1, 1)
 CheckButton/constants/check_vadjust = 0
 CheckButton/constants/hseparation = 4
 CheckButton/fonts/font = null
@@ -78,190 +81,184 @@ CheckButton/styles/hover_pressed = null
 CheckButton/styles/normal = null
 CheckButton/styles/pressed = null
 
-[sub_resource type="StyleBoxEmpty" id=5]
-
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id="6"]
 length = 5.0
 step = 0.0416667
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("Number:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1, 2, 3, 4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4 ]
+"values": [0, 1, 2, 3, 4]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("Seconds:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667, 1, 1.08333, 1.16667, 1.25, 1.33333, 1.41667, 1.5, 1.58333, 1.66667, 1.75, 1.83333, 1.91667, 2, 2.08333, 2.16667, 2.25, 2.33333, 2.41667, 2.5, 2.58333, 2.66667, 2.75, 2.83333, 2.91667, 3, 3.08333, 3.16667, 3.25, 3.33333, 3.41667, 3.5, 3.58333, 3.66667, 3.75, 3.83333, 3.91667, 4, 4.08333, 4.16667, 4.25, 4.33333, 4.41667, 4.5, 4.58333, 4.66667, 4.75, 4.83333, 4.91667 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667, 1, 1.08333, 1.16667, 1.25, 1.33333, 1.41667, 1.5, 1.58333, 1.66667, 1.75, 1.83333, 1.91667, 2, 2.08333, 2.16667, 2.25, 2.33333, 2.41667, 2.5, 2.58333, 2.66667, 2.75, 2.83333, 2.91667, 3, 3.08333, 3.16667, 3.25, 3.33333, 3.41667, 3.5, 3.58333, 3.66667, 3.75, 3.83333, 3.91667, 4, 4.08333, 4.16667, 4.25, 4.33333, 4.41667, 4.5, 4.58333, 4.66667, 4.75, 4.83333, 4.91667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 }
 tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("Seconds:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ true ]
+"values": [true]
 }
 tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/path = NodePath("AnimationPlayer")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 4.998 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "countdown_finished" ],
-"method": "emit_signal"
-} ]
+"times": PackedFloat32Array(4.998),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["countdown_finished"],
+"method": &"emit_signal"
+}]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id="7"]
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("Number:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ 5 ]
+"values": [5]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("Seconds:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ false ]
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nq3jq"]
+_data = {
+"Countdown": SubResource("6"),
+"Idle": SubResource("7")
 }
 
 [node name="Node2D" type="Node"]
 
-[node name="TrafficLight" type="Sprite" parent="."]
-position = Vector2( 24, 36 )
-texture = ExtResource( 1 )
-vframes = 2
+[node name="TrafficLight" type="Sprite2D" parent="."]
+position = Vector2(24, 36)
+texture = ExtResource("1")
 hframes = 2
+vframes = 2
 frame = 3
 
 [node name="FSM" type="Node" parent="TrafficLight"]
-script = ExtResource( 2 )
-starting_state = NodePath("")
+script = ExtResource("2")
 
 [node name="Stop" type="Node" parent="TrafficLight/FSM"]
-script = ExtResource( 3 )
-graph_offset = Vector2( 180, 120 )
-transitions = [ NodePath("../ToGo") ]
+script = ExtResource("3")
+transitions = Array[NodePath]([NodePath("../ToGo")])
+graph_offset = Vector2(180, 120)
 
 [node name="Wait" type="Node" parent="TrafficLight/FSM"]
-script = ExtResource( 3 )
-graph_offset = Vector2( 320, 660 )
-transitions = [ NodePath("../ToStop") ]
+script = ExtResource("3")
+transitions = Array[NodePath]([NodePath("../ToStop")])
+graph_offset = Vector2(320, 660)
 
 [node name="Go" type="Node" parent="TrafficLight/FSM"]
-script = ExtResource( 3 )
-graph_offset = Vector2( 760, 220 )
-transitions = [ NodePath("../ToWait") ]
+script = ExtResource("3")
+transitions = Array[NodePath]([NodePath("../ToWait")])
+graph_offset = Vector2(760, 220)
 
 [node name="ToGo" type="Node" parent="TrafficLight/FSM"]
-script = ExtResource( 11 )
-graph_offset = Vector2( 440, 160 )
+script = ExtResource("11")
 target_state = NodePath("../Go")
+graph_offset = Vector2(440, 160)
 
 [node name="ToWait" type="Node" parent="TrafficLight/FSM"]
-script = ExtResource( 11 )
-graph_offset = Vector2( 1000, 340 )
+script = ExtResource("11")
 target_state = NodePath("../Wait")
+graph_offset = Vector2(1000, 340)
 
 [node name="ToStop" type="Node" parent="TrafficLight/FSM"]
-script = ExtResource( 11 )
-graph_offset = Vector2( 40, 400 )
+script = ExtResource("11")
 target_state = NodePath("../Stop")
+graph_offset = Vector2(40, 400)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TrafficLight"]
-anims/Go = SubResource( 1 )
-anims/Stop = SubResource( 2 )
-anims/Wait = SubResource( 3 )
-script = ExtResource( 12 )
+libraries = {
+"": SubResource("AnimationLibrary_oxip4")
+}
+script = ExtResource("12")
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 68, 16.44 )
+position = Vector2(68, 16.44)
 
 [node name="CheckButton" type="CheckButton" parent="Node2D"]
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -22.0
-margin_top = -20.0
-margin_right = 22.0
-margin_bottom = 20.0
-theme = SubResource( 4 )
-custom_icons/off = ExtResource( 5 )
-custom_icons/on_disabled = ExtResource( 7 )
-custom_icons/on = ExtResource( 6 )
-custom_icons/off_disabled = ExtResource( 4 )
-custom_styles/focus = SubResource( 5 )
-script = ExtResource( 14 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+theme = SubResource("4")
+script = ExtResource("14")
 
-[node name="Stopwatch" type="Sprite" parent="."]
-position = Vector2( 68, 48 )
-texture = ExtResource( 8 )
+[node name="Stopwatch" type="Sprite2D" parent="."]
+position = Vector2(68, 48)
+texture = ExtResource("8")
 
-[node name="Number" type="Sprite" parent="Stopwatch"]
-position = Vector2( 0, 3 )
-texture = ExtResource( 10 )
-vframes = 2
+[node name="Number" type="Sprite2D" parent="Stopwatch"]
+position = Vector2(0, 3)
+texture = ExtResource("10")
 hframes = 3
+vframes = 2
 frame = 5
 
-[node name="Seconds" type="Sprite" parent="Stopwatch"]
+[node name="Seconds" type="Sprite2D" parent="Stopwatch"]
 visible = false
-position = Vector2( 0, 3 )
-texture = ExtResource( 9 )
-vframes = 3
+position = Vector2(0, 3)
+texture = ExtResource("9")
 hframes = 4
+vframes = 3
 frame = 11
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Stopwatch"]
-anims/Countdown = SubResource( 6 )
-anims/Idle = SubResource( 7 )
-script = ExtResource( 13 )
+libraries = {
+"": SubResource("AnimationLibrary_nq3jq")
+}
+script = ExtResource("13")
+
 [connection signal="activate" from="TrafficLight/FSM/Stop" to="Node2D/CheckButton" method="_on_stop_activated"]
-[connection signal="activate" from="TrafficLight/FSM/Stop" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= [ "Stop" ]]
+[connection signal="activate" from="TrafficLight/FSM/Stop" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= ["Stop"]]
 [connection signal="activate" from="TrafficLight/FSM/Wait" to="Node2D/CheckButton" method="_on_wait_activated"]
-[connection signal="activate" from="TrafficLight/FSM/Wait" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= [ "Wait" ]]
 [connection signal="activate" from="TrafficLight/FSM/Wait" to="Stopwatch/AnimationPlayer" method="_on_wait_activated"]
-[connection signal="activate" from="TrafficLight/FSM/Go" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= [ "Go" ]]
-[connection signal="pressed" from="Node2D/CheckButton" to="TrafficLight/FSM/ToWait" method="_condition"]
+[connection signal="activate" from="TrafficLight/FSM/Wait" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= ["Wait"]]
+[connection signal="activate" from="TrafficLight/FSM/Go" to="TrafficLight/AnimationPlayer" method="_on_state_activate" binds= ["Go"]]
 [connection signal="pressed" from="Node2D/CheckButton" to="TrafficLight/FSM/ToGo" method="_condition"]
+[connection signal="pressed" from="Node2D/CheckButton" to="TrafficLight/FSM/ToWait" method="_condition"]
 [connection signal="countdown_finished" from="Stopwatch/AnimationPlayer" to="TrafficLight/FSM/ToStop" method="_condition"]
 [connection signal="countdown_finished" from="Stopwatch/AnimationPlayer" to="Stopwatch/AnimationPlayer" method="_on_countdown_finished"]

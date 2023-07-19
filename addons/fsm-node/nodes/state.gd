@@ -3,8 +3,10 @@
 class_name State
 extends FSM_Component
 
-@export var transitions: Array[NodePath]
 var transition_nodes = []
+
+## The list of Transitions it connects to.
+@export var transitions: Array[NodePath]
 
 func _get_configuration_warning():
 	return "" if get_parent().is_class("FSM") else "Parent should be FSM."

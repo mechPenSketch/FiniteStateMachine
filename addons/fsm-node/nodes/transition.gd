@@ -3,9 +3,11 @@
 class_name Transition
 extends FSM_Component
 
-@export var target_state: NodePath
 var target_state_node
 var incoming_signals
+
+## The State to change to when condition is met.
+@export var target_state: NodePath
 
 func _condition():
 	get_parent().change_state(target_state_node)

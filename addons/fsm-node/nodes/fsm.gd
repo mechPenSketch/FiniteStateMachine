@@ -5,11 +5,13 @@ extends Node
 
 var current_state
 var state_tranistion_indexes
-@export var starting_state: NodePath
 
-# GRAPH
+# For Graph Workspace
 var associated_graph_edit
 var connections = []
+
+## The State it starts with when the project is played. If not set, it will instead start with the first child State.
+@export var starting_state: NodePath
 
 func _ready():
 	
