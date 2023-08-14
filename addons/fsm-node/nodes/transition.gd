@@ -3,18 +3,18 @@
 class_name Transition
 extends FSM_Component
 
-var target_state_node
-var incoming_signals
-
 ## The State to change to when condition is met.
-@export var target_state: NodePath
+@export var target_state: State
+
+## An array of dictionaries, each recording an incoming signal.
+## All of them will be disconnected first, only to be connected
+## as long as the transition is active.
+var incoming_signals
 
 func _ready():
 	super._ready()
 	
 	if !Engine.is_editor_hint():
-		# TARGET STATE
-		target_state_node = get_node(target_state)
 		
 		# SIGNALS
 		incoming_signals = get_incoming_connections()
@@ -27,7 +27,7 @@ func _get_configuration_warning():
 
 ## To recieve a signal that should be emmited when the state is to be changed.
 func _condition():
-	get_parent().change_state(target_state_node)
+	get_parent().change_state(target_state)
 
 
 func get_class():

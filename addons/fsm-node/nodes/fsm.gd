@@ -11,7 +11,7 @@ var associated_graph_edit
 var connections = []
 
 ## The State it starts with when the project is played. If not set, it will instead start with the first child State.
-@export var starting_state: NodePath
+@export var starting_state: State
 
 func _ready():
 	
@@ -30,7 +30,7 @@ func _ready():
 		
 		# IF THE starting_state IS DEFNIED, WE'LL USE IT
 		if starting_state:
-			current_state = get_node(starting_state)
+			current_state = starting_state
 			current_state.set_active(true)
 	
 		# OTHERWISE, WE'LL USE THE FIRST STATE IN OUR CHILDREN

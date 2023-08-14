@@ -3,10 +3,8 @@
 class_name State
 extends FSM_Component
 
-var transition_nodes = []
-
 ## The list of Transitions it connects to.
-@export var transitions: Array[NodePath]
+@export var transitions: Array[Transition]
 
 func _ready():
 	super._ready()
@@ -15,9 +13,6 @@ func _ready():
 		set_physics_process(false)
 		set_process(false)
 		set_process_input(false)
-		
-		for np in transitions:
-			transition_nodes += [get_node(np)]
 
 
 func _get_configuration_warning():
@@ -42,5 +37,5 @@ func set_active(b:bool):
 
 ## Sets all transitions it's connected to whether to be active.
 func set_transitions():
-	for t in transition_nodes:
+	for t in transitions:
 		t.set_active(active)
