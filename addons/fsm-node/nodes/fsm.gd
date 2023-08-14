@@ -41,6 +41,7 @@ func _ready():
 					c.set_active(true)
 					break
 
+
 func _notification(what):
 	if Engine.is_editor_hint():
 		match what:
@@ -64,30 +65,39 @@ func _notification(what):
 						if target_indx != selfgraph_indx:
 							graph_fsm_edit_root.move_child(associated_graph_edit, target_indx)
 
+
 func _get_configuration_warning():
 	# to get called by update_configuration_warning() when there's a change in tree
 	for c in get_children():
 		if c.is_class("State"):
 			return ""
 	return "Add at least one State to this node."
-	
+
+
+## Activates a state. 
 func activate_state(s):
-	# SET STATE
 	current_state = s
 	current_state.set_active(true)
 
+
+## Changes from one state to another.
 func change_state(s):
 	deactivate_state()
 	activate_state(s)
 
+
+## Deactivates the current state.
 func deactivate_state():
 	current_state.set_active(false)
+
 
 func get_class():
 	return "FSM"
 
+
 func is_class(c):
 	return c == get_class() or super.is_class(c)
+
 
 func node_is_higher(node_a, node_b):
 	var rel_path = node_a.get_path_to(node_b)
