@@ -2,6 +2,9 @@
 @icon("icons/fsm.svg")
 class_name FSM
 extends Node
+## A node that manages which State is to be active. Has [FSM_Component]s as its children nodes.
+##
+## In the FSM workspace, it is represented as a [GraphEdit], showing all its FSM component children and their relations.
 
 var current_state
 var state_tranistion_indexes

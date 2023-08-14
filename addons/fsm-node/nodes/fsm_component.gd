@@ -1,6 +1,9 @@
 @tool
 class_name FSM_Component
 extends Node
+## A node representing one part of an FSM system. It is to be a child of an FSM node.
+##
+## In the FSM workspace, it is represented by a [GrpahNode].
 
 var active = false
 

@@ -2,6 +2,7 @@
 @icon("icons/transition.svg")
 class_name Transition
 extends FSM_Component
+## A node that determines when to change state.
 
 ## The State to change to when condition is met.
 @export var target_state: State

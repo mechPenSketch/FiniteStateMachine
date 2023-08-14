@@ -2,6 +2,7 @@
 @icon("icons/state.svg")
 class_name State
 extends FSM_Component
+## A node representing one type of behavior that would be in effect when active.
 
 ## The list of Transitions it connects to.
 @export var transitions: Array[Transition]
