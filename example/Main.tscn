@@ -195,12 +195,12 @@ script = ExtResource("3")
 transitions = [NodePath("../ToWait")]
 graph_offset = Vector2(760, 220)
 
-[node name="ToGo" type="Node" parent="TrafficLight/FSM"]
+[node name="ToGo" type="Node" parent="TrafficLight/FSM" node_paths=PackedStringArray("target_state")]
 script = ExtResource("11")
 target_state = NodePath("../Go")
 graph_offset = Vector2(440, 160)
 
-[node name="ToWait" type="Node" parent="TrafficLight/FSM"]
+[node name="ToWait" type="Node" parent="TrafficLight/FSM" node_paths=PackedStringArray("target_state")]
 script = ExtResource("11")
 target_state = NodePath("../Wait")
 graph_offset = Vector2(1000, 340)

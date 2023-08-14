@@ -36,7 +36,7 @@ func _ready():
 		# OTHERWISE, WE'LL USE THE FIRST STATE IN OUR CHILDREN
 		else:
 			for c in get_children():
-				if c.is_class("State"):
+				if c is State:
 					current_state = c
 					c.set_active(true)
 					break
@@ -69,7 +69,7 @@ func _notification(what):
 func _get_configuration_warning():
 	# to get called by update_configuration_warning() when there's a change in tree
 	for c in get_children():
-		if c.is_class("State"):
+		if c is State:
 			return ""
 	return "Add at least one State to this node."
 
