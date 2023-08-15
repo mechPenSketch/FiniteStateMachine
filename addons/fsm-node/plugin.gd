@@ -255,12 +255,12 @@ func _on_node_added_to_tree(node):
 				# IF THERE ARE ANY CONNECTIONS
 				if node.transitions:
 					for t in node.transitions:
-						parent.connections += [{"from": node, "to": node.get_node(t)}]
+						parent.connections += [{"from": node, "to": t}]
 				
 			else:
 				# IF THERE IS ANY CONNECTION
 				if node.target_state:
-					parent.connections += [{"from": node, "to": node.get_node(node.target_state)}]
+					parent.connections += [{"from": node, "to": node.target_state}]
 
 
 func _on_node_removed_from_tree(node):
