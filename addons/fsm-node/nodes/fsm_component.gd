@@ -19,6 +19,30 @@ func _ready():
 	if !Engine.is_editor_hint():
 		activate.connect(_activate)
 		deactivate.connect(_deactivate)
+	else:
+		var node = self
+		var file_path = get_scene_file_path()
+		while file_path == "":
+			node = node.get_parent()
+				
+			if node == get_tree().get_edited_scene_root():
+				var initial_file_path = node.get_scene_file_path()
+				var packed_scene = load(initial_file_path)
+				var inst = packed_scene.get_state().get_node_instance(0)
+				if inst:
+					file_path = inst.get_path()
+				break
+			else:
+				file_path = node.get_scene_file_path()
+		
+		if file_path:
+			var node_path = NodePath("./" + str(node.get_path_to(self)))
+			var packed_scene = load(file_path)
+			var ps_node_count = packed_scene.get_state().get_node_count()
+			for i in range(ps_node_count):
+				if node_path == packed_scene.get_state().get_node_path(i):
+					print("This node is inherited")
+					break
 
 
 func _get_configuration_warning():
