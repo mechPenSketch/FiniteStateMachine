@@ -16,6 +16,8 @@ var parent_fsm
 var new_connection = {}
 signal new_comp
 
+var current_root_node: Node
+var current_node_paths
 var graph_fsm_edit_root
 var GraphFsmEdit = preload("main_screen/GraphFSMEdit.tscn")
 var GraphNodes = {"state": preload("main_screen/graph_nodes/GraphState.tscn"),
@@ -32,13 +34,13 @@ func _enter_tree():
 	editor_selection = get_editor_interface().get_selection()
 	editor_selection.selection_changed.connect(Callable(self, "_on_selection_changed"))
 	
-	# SET UP MAIN SCREEN
+	# Set up Main Screen
 	main_panel_instance = MainPanel.instantiate()
 	get_editor_interface().get_editor_main_screen().add_child(main_panel_instance)
 	_make_visible(false)
 	
-	# SET TOOLBAR
-	#	GET BUTTONS
+	# Set up Toolbars
+	#	Get Buttons
 	toolbar_btns = {
 		"select": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer/Select"),
 		"move": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer/Move"),
@@ -49,12 +51,12 @@ func _enter_tree():
 		"remove": main_panel_instance.get_node("MarginContainer/HBoxContainer/HBoxContainer3/Remove")
 	}
 	
-	#	REUSE GODOT ICONS
+	#	Reuse Godot Icons
 	toolbar_btns["select"].set_button_icon(get_editor_interface().get_base_control().get_theme_icon("ToolSelect", "EditorIcons"))
 	toolbar_btns["move"].set_button_icon(get_editor_interface().get_base_control().get_theme_icon("ToolMove", "EditorIcons"))
 	toolbar_btns["remove"].set_button_icon(get_editor_interface().get_base_control().get_theme_icon("Remove", "EditorIcons"))
 	
-	#	DEFINE PRESS METHODS
+	#	Define Press Methods
 	toolbar_btns_pressed_methods = {
 		"select": "_on_select_pressed",
 		"move": "_on_move_pressed",
@@ -65,11 +67,11 @@ func _enter_tree():
 		"remove": "_on_remove_pressed"
 	}
 	
-	#	CONNECT SIGNALS
+	#	Connect Signals
 	for k in toolbar_btns.keys():
 		toolbar_btns[k].pressed.connect(Callable(self, toolbar_btns_pressed_methods[k]))
 	
-	# ADD POPUP DIALOGS
+	# Add Popup Dialogs
 	behind_popup = get_script_create_dialog().get_parent()
 	popup_new_state = PopupNewState.instantiate()
 	behind_popup.add_child(popup_new_state)
@@ -78,7 +80,7 @@ func _enter_tree():
 	behind_popup.add_child(popup_new_transition)
 	popup_new_transition.confirmed.connect(_make_new_transition)
 	
-	# GRAPHWORKS
+	# Graphworks
 	graph_fsm_edit_root = main_panel_instance.get_node("ScrollContainer/VBoxContainer")
 	get_tree().node_added.connect(_on_node_added_to_tree)
 	get_tree().node_removed.connect(_on_node_removed_from_tree)
@@ -158,7 +160,8 @@ func _on_transition_pressed(b):
 
 func _on_addstate_pressed():
 	popup_new_state.popup_centered()
-	
+
+
 func _on_addtransition_pressed():
 	popup_new_transition.popup_centered()
 
@@ -222,24 +225,30 @@ func set_add_component_disabled(b:bool):
 	toolbar_btns["addtransition"].set_disabled(b)
 
 
-# GRAPHWORKS
+# Graphworks
 func _on_node_added_to_tree(node):
+	if node == get_tree().get_edited_scene_root():
+		current_root_node = node
+	
+		var file_path = node.get_scene_file_path()
+		var packed_scene = load(file_path)
+		current_node_paths = packed_scene._bundled["node_paths"]
 	
 	if node is FSM:
-		# ADD NEW FSM GRAPH
+		# Add new FSM Graph
 		var gfe_instance = GraphFsmEdit.instantiate()
 		graph_fsm_edit_root.add_child(gfe_instance)
 		node.associated_graph_edit = gfe_instance
 		gfe_instance.set_associated_fsm(node)
 		
-		# GIVE IT A LABEL
+		# Give it a Label
 		var fsm_title = Label.new()
 		fsm_title.set_text(node.get_name())
 		gfe_instance.get_zoom_hbox().add_child(fsm_title)
 		gfe_instance.get_zoom_hbox().move_child(fsm_title, 0)
 		gfe_instance.title = fsm_title
 		
-		# CONNECT SIGNALS
+		# Connect Signals
 		gfe_instance.gui_input.connect(_on_fsm_input.bind(gfe_instance))
 		gfe_instance.connection_from_empty.connect(_on_connect_from_empty.bind(gfe_instance))
 		gfe_instance.connection_to_empty.connect(_on_connect_to_empty.bind(gfe_instance))
@@ -252,15 +261,21 @@ func _on_node_added_to_tree(node):
 			var is_state = node is State
 			add_graph_node("state" if is_state else "transition", gfe, node)
 			if is_state:
-				# IF THERE ARE ANY CONNECTIONS
+				# Connections
 				if node.transitions:
 					for t in node.transitions:
 						parent.connections += [{"from": node, "to": t}]
 				
 			else:
-				# IF THERE IS ANY CONNECTION
+				# Connections
 				if node.target_state:
 					parent.connections += [{"from": node, "to": node.target_state}]
+			
+			# Inheritance
+			var path_node = current_root_node.get_path_to(node)
+			# If path_node is not present in current_node_paths, then the component is inherited via scene.
+			if not path_node in current_node_paths:
+				print("Inherited")
 
 
 func _on_node_removed_from_tree(node):

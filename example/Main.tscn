@@ -167,7 +167,7 @@ _data = {
 "Idle": SubResource("7")
 }
 
-[node name="Node2D" type="Node"]
+[node name="Node" type="Node"]
 
 [node name="TrafficLight" type="Sprite2D" parent="."]
 position = Vector2(24, 36)

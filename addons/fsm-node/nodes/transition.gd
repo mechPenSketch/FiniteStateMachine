@@ -31,10 +31,6 @@ func _condition():
 	get_parent().change_state(target_state)
 
 
-func get_class():
-	return "Transition"
-
-
 ## (Dis)connects all incoming signals depending on the activation of the state(s) connected to it.
 func set_active(b:bool):
 	if b:

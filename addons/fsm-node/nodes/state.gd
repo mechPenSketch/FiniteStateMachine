@@ -20,10 +20,6 @@ func _get_configuration_warning():
 	return "" if get_parent().is_class("FSM") else "Parent should be FSM."
 
 
-func get_class():
-	return "State"
-
-
 ## Sets the state whether to be active.
 func set_active(b:bool):
 	active = b
