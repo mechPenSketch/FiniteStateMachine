@@ -258,24 +258,34 @@ func _on_node_added_to_tree(node):
 		if parent is FSM:
 			var gfe = parent.associated_graph_edit
 			
+			# Adding Graph Node
 			var is_state = node is State
-			add_graph_node("state" if is_state else "transition", gfe, node)
+			var state_key = "state" if is_state else "transition"
+			var graph_node = GraphNodes[state_key].instantiate()
+			gfe.add_child(graph_node)
+			node.associated_graph_node = graph_node
+			graph_node.set_associated_component(node)
+			
+			# Set Graph Node
+			graph_node.set_position_offset(node.graph_offset)
+			graph_node.set_comp_name(node.get_name())
+			
+			# Connections
 			if is_state:
-				# Connections
 				if node.transitions:
 					for t in node.transitions:
 						parent.connections += [{"from": node, "to": t}]
 				
 			else:
-				# Connections
 				if node.target_state:
 					parent.connections += [{"from": node, "to": node.target_state}]
 			
 			# Inheritance
 			var path_node = current_root_node.get_path_to(node)
-			# If path_node is not present in current_node_paths, then the component is inherited via scene.
+			
+			# 	If path_node is not present in current_node_paths, then the component is inherited via scene.
 			if not path_node in current_node_paths:
-				print("Inherited")
+				graph_node.set_inheritance()
 
 
 func _on_node_removed_from_tree(node):
@@ -303,16 +313,6 @@ func _on_node_in_tree_renamed(node):
 		
 	elif node is FSM_Component:
 		node.associated_graph_node.set_comp_name(node.get_name())
-
-
-func add_graph_node(key, fsm_root, base):
-	var gn = GraphNodes[key].instantiate()
-	fsm_root.add_child(gn)
-	base.associated_graph_node = gn
-	gn.set_associated_component(base)
-	
-	gn.set_position_offset(base.graph_offset)
-	gn.set_comp_name(base.get_name())
 
 
 # INTERFACE INTERACTIONS
