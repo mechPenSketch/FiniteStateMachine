@@ -3,6 +3,8 @@ extends EditorPlugin
 
 var editor_selection
 
+var scenedock_tree
+
 var MainPanel = preload("main_screen/MainPanel.tscn")
 var main_panel_instance
 
@@ -33,6 +35,9 @@ var select_transition:bool = true
 func _enter_tree():
 	editor_selection = get_editor_interface().get_selection()
 	editor_selection.selection_changed.connect(Callable(self, "_on_selection_changed"))
+	
+	var scenedock = get_editor_interface().get_base_control().find_children("Scene", "SceneTreeDock", true, false)[0]
+	scenedock_tree = scenedock.find_children("*", "Tree", true, false)[0]
 	
 	# Set up Main Screen
 	main_panel_instance = MainPanel.instantiate()
@@ -281,11 +286,14 @@ func _on_node_added_to_tree(node):
 					parent.connections += [{"from": node, "to": node.target_state}]
 			
 			# Inheritance
-			var path_node = current_root_node.get_path_to(node)
-			
-			# 	If path_node is not present in current_node_paths, then the component is inherited via scene.
-			if not path_node in current_node_paths:
-				graph_node.set_inheritance()
+			var tree_item = scenedock_tree.get_root()
+			while tree_item != null:
+				if tree_item.get_text(0) == node.get_name():
+					if tree_item.get_custom_color(0) == Color(1, 0.87, 0.4, 1):
+						graph_node.set_inheritance()
+					break
+				else:
+					tree_item = tree_item.get_next_in_tree()
 
 
 func _on_node_removed_from_tree(node):
