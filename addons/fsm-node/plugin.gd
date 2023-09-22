@@ -286,14 +286,13 @@ func _on_node_added_to_tree(node):
 					parent.connections += [{"from": node, "to": node.target_state}]
 			
 			# Inheritance
-			var tree_item = scenedock_tree.get_root()
-			while tree_item != null:
-				if tree_item.get_text(0) == node.get_name():
+			var node_path_array = get_nodepath_in_array(node)
+			var root_item = scenedock_tree.get_root()
+			if root_item:
+				var tree_item = get_treeitem_from_nodepath(root_item, node_path_array)
+				if tree_item:
 					if tree_item.get_custom_color(0) == Color(1, 0.87, 0.4, 1):
 						graph_node.set_inheritance()
-					break
-				else:
-					tree_item = tree_item.get_next_in_tree()
 
 
 func _on_node_removed_from_tree(node):
@@ -321,6 +320,29 @@ func _on_node_in_tree_renamed(node):
 		
 	elif node is FSM_Component:
 		node.associated_graph_node.set_comp_name(node.get_name())
+
+
+func get_nodepath_in_array(base_node: Node)-> PackedStringArray:
+	var node_path = current_root_node.get_path_to(base_node)
+	var np_str = String(node_path)
+	var np_array = np_str.split("/")
+	return np_array
+
+
+func get_treeitem_from_nodepath(base_item:TreeItem, array_node: PackedStringArray)-> TreeItem:
+	var tree_item = base_item
+	
+	while tree_item != null:
+		if tree_item.get_text(0) == array_node[0]:
+			if array_node.size() == 1:
+				return tree_item
+			else:
+				array_node.slice(1)
+				tree_item = tree_item.get_next_in_tree()
+		else:
+			tree_item = tree_item.get_next()
+	
+	return null
 
 
 # INTERFACE INTERACTIONS
