@@ -178,51 +178,36 @@ func _on_remove_pressed():
 
 
 func _make_new_state():
-	# GENERATE NEW EVENT
+	# Generate New Node
 	var inst_state = State.new()
-	
-	#	NAME OF NEW EVENT
-	var nd_input = popup_new_state.find_node("Name")
-	var new_name = nd_input.get_text()
-	if new_name:
-		inst_state.set_comp_name(new_name)
-		new_connection["new"] = new_name
-		
-		# CLEAR INPUT
-		nd_input.clear()
-		
-	#	SET OFFSET
-	if new_offset:
-		inst_state.graph_offset = new_offset
-		new_offset = Vector2()
-	
-	parent_fsm.add_child(inst_state)
-	inst_state.set_owner(get_tree().get_edited_scene_root())
-	emit_signal("new_comp")
+	make_new_comp(inst_state, popup_new_state)
 
 
 func _make_new_transition():
-	# GENERATE NEW EVENT
-	var inst_state = Transition.new()
-	
-	#	NAME OF NEW EVENT
-	var nd_input = popup_new_transition.find_node("Name")
+	# Instantiate New Node
+	var inst_transition = Transition.new()
+	make_new_comp(inst_transition, popup_new_transition)
+
+
+func make_new_comp(inst_comp, popup_new_comp):
+	#	Node Name
+	var nd_input = popup_new_comp.find_node("Name")
 	var new_name = nd_input.get_text()
 	if new_name:
-		inst_state.set_comp_name(new_name)
+		inst_comp.set_name(new_name)
 		new_connection["new"] = new_name
 		
-		# CLEAR INPUT
+		# Clear Input
 		nd_input.clear()
 		
-	#	SET OFFSET
+	#	Set Offset
 	if new_offset:
-		inst_state.graph_offset = new_offset
+		inst_comp.graph_offset = new_offset
 		new_offset = Vector2()
 	
-	parent_fsm.add_child(inst_state)
-	inst_state.set_owner(get_tree().get_edited_scene_root())
-	emit_signal("new_comp")
+	parent_fsm.add_child(inst_comp)
+	inst_comp.set_owner(get_tree().get_edited_scene_root())
+	new_comp.emit()
 
 
 func set_add_component_disabled(b:bool):
