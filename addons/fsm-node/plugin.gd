@@ -22,8 +22,10 @@ var current_root_node: Node
 var current_node_paths
 var graph_fsm_edit_root
 var GraphFsmEdit = preload("main_screen/GraphFSMEdit.tscn")
-var GraphNodes = {"state": preload("main_screen/graph_nodes/GraphState.tscn"),
-"transition":  preload("main_screen/graph_nodes/GraphTransition.tscn")}
+var GraphNodes = {
+		"state": preload("main_screen/graph_nodes/GraphState.tscn"),
+		"transition":  preload("main_screen/graph_nodes/GraphTransition.tscn")
+	}
 
 var toolbar_btns:Dictionary
 var toolbar_btns_pressed_methods:Dictionary
@@ -231,12 +233,7 @@ func _on_node_added_to_tree(node):
 		node.associated_graph_edit = gfe_instance
 		gfe_instance.set_associated_fsm(node)
 		
-		# Give it a Label
-		var fsm_title = Label.new()
-		fsm_title.set_text(node.get_name())
-		gfe_instance.get_zoom_hbox().add_child(fsm_title)
-		gfe_instance.get_zoom_hbox().move_child(fsm_title, 0)
-		gfe_instance.title = fsm_title
+		gfe_instance.add_title_label(node.get_name())
 		
 		# Connect Signals
 		gfe_instance.gui_input.connect(_on_fsm_input.bind(gfe_instance))
@@ -293,7 +290,7 @@ func _on_node_removed_from_tree(node):
 			var parent_edit = parent.associated_graph_edit
 			var node_name = node.get_name()
 			for c in parent_edit.get_connection_list():
-				if c["from"] == node_name or c["to"] == node_name:
+				if c["from_node"] == node_name or c["to_node"] == node_name:
 					parent_edit.disconnect_node(c["from"], 0, c["to"], 0)
 		
 		node.associated_graph_node.queue_free()

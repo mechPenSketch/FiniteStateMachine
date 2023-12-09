@@ -5,6 +5,7 @@ CompGraphElement/colors/border = Color(0.611765, 0.368627, 0.964706, 1)
 CompGraphElement/colors/border_selected = Color(1, 1, 1, 1)
 CompGraphElement/colors/font_inherited = Color(1, 0.870588, 0.4, 1)
 CompGraphElement/colors/frame = Color(0.286275, 0, 0.701961, 1)
+CompGraphElement/constants/border_margin = 5
 CompGraphElement/constants/border_width = 3
 CompGraphElement/icons/hover = null
 Transition/base_type = &"CompGraphElement"

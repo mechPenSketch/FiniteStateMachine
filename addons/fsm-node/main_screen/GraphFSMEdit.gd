@@ -1,8 +1,17 @@
 @tool
 extends GraphEdit
 
-var associated_fsm
-var title
+var associated_fsm: FSM
+
+func _draw():
+	var connections = get_connection_list()
+	
+	for c in connections:
+		var from = get_node(NodePath(c["from_node"])).global_position
+		var to = get_node(NodePath(c["to_node"])).global_position
+		
+		draw_line(from, to, Color.WHITE, 10.0)
+
 
 func _on_connection_request(str_from, from_port, str_to, to_port):
 	
@@ -62,6 +71,13 @@ func _on_disconnection_request(str_from, from_port, str_to, to_port):
 		
 	# Update property list
 	nd_from.notify_property_list_changed()
+
+
+func add_title_label(s: String):
+	var fsm_title = Label.new()
+	fsm_title.set_text(s)
+	get_menu_hbox().add_child(fsm_title)
+	get_menu_hbox().move_child(fsm_title, 0)
 
 
 func set_associated_fsm(node):

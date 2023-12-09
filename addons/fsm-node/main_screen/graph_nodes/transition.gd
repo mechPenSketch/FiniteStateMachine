@@ -4,6 +4,7 @@ extends CompGraphElement
 func draw_frame(size):
 	var half_width = size.x / 2
 	var half_height = size.y / 2
+	half_height += get_theme_constant("border_margin", THEME_TYPE)
 	
 	var right = global_position.x + half_width
 	var rightest = right + half_height

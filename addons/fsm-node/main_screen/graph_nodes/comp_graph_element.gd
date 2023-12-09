@@ -14,8 +14,7 @@ var current_state: int
 
 func _draw():
 	var font = get_theme_font("font")
-	var text = get_name()
-	var str_size = font.get_string_size(text, HORIZONTAL_ALIGNMENT_CENTER)
+	var str_size = font.get_string_size(comp_name, HORIZONTAL_ALIGNMENT_CENTER)
 	
 	draw_frame(str_size)
 	
@@ -25,7 +24,7 @@ func _draw():
 		font_color = get_theme_color("font_inherited", THEME_TYPE)
 	else:
 		font_color = Color.WHITE
-	draw_string(font, pos, text, HORIZONTAL_ALIGNMENT_CENTER, -1, 16, font_color)
+	draw_string(font, pos, comp_name, HORIZONTAL_ALIGNMENT_CENTER, -1, 16, font_color)
 
 
 func _on_dragged(_from, to):
@@ -33,7 +32,14 @@ func _on_dragged(_from, to):
 
 
 func draw_frame(size):
-	var radius = size.x / 2 + 10
+	var radius
+	if size.x >= size.y:
+		radius = size.x
+	else:
+		radius = size.y
+	radius /= 2
+	radius += get_theme_constant("border_margin", THEME_TYPE)
+	
 	draw_circle(global_position, radius, get_theme_color("frame", THEME_TYPE))
 	
 	draw_arc(global_position, radius, 0, 2 * PI, 32, get_border_color(), get_theme_constant("border_width", THEME_TYPE))
