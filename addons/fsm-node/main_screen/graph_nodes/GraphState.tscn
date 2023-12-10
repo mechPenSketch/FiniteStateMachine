@@ -4,8 +4,6 @@
 [ext_resource type="Script" path="res://addons/fsm-node/main_screen/graph_nodes/comp_graph_element.gd" id="2_wdwl8"]
 
 [node name="State" type="GraphElement"]
-grow_horizontal = 2
-grow_vertical = 2
 theme = ExtResource("1")
 script = ExtResource("2_wdwl8")
 

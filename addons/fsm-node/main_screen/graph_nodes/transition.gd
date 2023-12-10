@@ -6,20 +6,19 @@ func draw_frame(size):
 	var half_height = size.y / 2
 	half_height += get_theme_constant("border_margin", THEME_TYPE)
 	
-	var right = global_position.x + half_width
+	var right = half_width
 	var rightest = right + half_height
-	var left = global_position.x - half_width
+	var left = -right
 	var leftest = left - half_height
 	
-	var mid = global_position.y
-	var down = mid + half_height
-	var up = mid - half_height
+	var down = half_height
+	var up = -down
 	
 	var points = [
-		Vector2(leftest, mid),
+		Vector2(leftest, 0),
 		Vector2(left, up),
 		Vector2(right, up),
-		Vector2(rightest, mid),
+		Vector2(rightest, 0),
 		Vector2(right, down),
 		Vector2(left, down),
 	]

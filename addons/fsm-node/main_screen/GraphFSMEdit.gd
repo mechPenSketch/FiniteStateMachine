@@ -3,15 +3,15 @@ extends GraphEdit
 
 var associated_fsm: FSM
 
-var comp_connections
+var comp_connections = []
 
 func _draw():
 	
 	for c in comp_connections:
-		var from = c["from"].global_position
-		var to = c["to"].global_position
+		var from = c["from"].position_offset * zoom - scroll_offset
+		var to = c["to"].position_offset * zoom - scroll_offset
 		
-		draw_line(from, to, Color.WHITE, 10.0)
+		draw_line(from, to, Color.WHITE, get_connection_lines_thickness())
 
 
 func _on_connection_request(str_from, from_port, str_to, to_port):

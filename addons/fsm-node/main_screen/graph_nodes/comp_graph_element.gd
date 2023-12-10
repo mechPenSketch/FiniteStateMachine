@@ -18,13 +18,13 @@ func _draw():
 	
 	draw_frame(str_size)
 	
-	var pos = global_position - str_size / Vector2(2, -4)
+	var str_pos = str_size / Vector2(-2, 4)
 	var font_color
 	if is_inherited:
 		font_color = get_theme_color("font_inherited", THEME_TYPE)
 	else:
 		font_color = Color.WHITE
-	draw_string(font, pos, comp_name, HORIZONTAL_ALIGNMENT_CENTER, -1, 16, font_color)
+	draw_string(font, str_pos, comp_name, HORIZONTAL_ALIGNMENT_CENTER, -1, 16, font_color)
 
 
 func _on_dragged(_from, to):
@@ -39,10 +39,12 @@ func draw_frame(size):
 		radius = size.y
 	radius /= 2
 	radius += get_theme_constant("border_margin", THEME_TYPE)
+	if get_parent() is GraphEdit:
+		radius *= get_parent().zoom
 	
-	draw_circle(global_position, radius, get_theme_color("frame", THEME_TYPE))
+	draw_circle(Vector2.ZERO, radius, get_theme_color("frame", THEME_TYPE))
 	
-	draw_arc(global_position, radius, 0, 2 * PI, 32, get_border_color(), get_theme_constant("border_width", THEME_TYPE))
+	draw_arc(Vector2.ZERO, radius, 0, 2 * PI, 32, get_border_color(), get_theme_constant("border_width", THEME_TYPE))
 
 
 func get_border_color():
