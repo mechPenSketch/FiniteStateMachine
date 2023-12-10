@@ -3,12 +3,13 @@ extends GraphEdit
 
 var associated_fsm: FSM
 
+var comp_connections
+
 func _draw():
-	var connections = get_connection_list()
 	
-	for c in connections:
-		var from = get_node(NodePath(c["from_node"])).global_position
-		var to = get_node(NodePath(c["to_node"])).global_position
+	for c in comp_connections:
+		var from = c["from"].global_position
+		var to = c["to"].global_position
 		
 		draw_line(from, to, Color.WHITE, 10.0)
 
@@ -22,8 +23,7 @@ func _on_connection_request(str_from, from_port, str_to, to_port):
 		var nd_from = gn_from.associated_component
 		var nd_to = gn_to.associated_component
 		
-		var connection_type = gn_from.get_connection_output_type(0)
-		if connection_type == 1:
+		if nd_from is State and nd_to is Transition:
 			# State to Transition
 			
 			#	If connection is successfully made,
@@ -33,7 +33,7 @@ func _on_connection_request(str_from, from_port, str_to, to_port):
 				
 				# Update property list
 				nd_from.notify_property_list_changed()
-		else:
+		elif nd_from is Transition and nd_to is State:
 			# Transition to State
 			
 			#	For every connections
@@ -78,6 +78,18 @@ func add_title_label(s: String):
 	fsm_title.set_text(s)
 	get_menu_hbox().add_child(fsm_title)
 	get_menu_hbox().move_child(fsm_title, 0)
+
+
+func connect_comp_nodes(connections: Array):
+	comp_connections = []
+	
+	for c in connections:
+		var dict = {
+				"from": c["from"].associated_graph_node,
+				"to": c["to"].associated_graph_node,
+			}
+		
+		comp_connections.append(dict)
 
 
 func set_associated_fsm(node):

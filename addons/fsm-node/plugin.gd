@@ -284,16 +284,21 @@ func _on_node_removed_from_tree(node):
 		gfe.queue_free()
 		
 	elif node is FSM_Component:
-		# DISCONNECT FROM AFFECTED NODE
+		# Disconnect from other Comp Elements
 		var parent = node.get_parent()
-		if parent is FSM:
-			var parent_edit = parent.associated_graph_edit
-			var node_name = node.get_name()
-			for c in parent_edit.get_connection_list():
-				if c["from_node"] == node_name or c["to_node"] == node_name:
-					parent_edit.disconnect_node(c["from"], 0, c["to"], 0)
+		var graph_node = node.associated_graph_node
 		
-		node.associated_graph_node.queue_free()
+		if parent is FSM:
+			var erase_in_arr = []
+			
+			for c in parent.connections:
+				if c["from"] == graph_node or c["to"] == graph_node:
+					erase_in_arr.append(c)
+			
+			for d in erase_in_arr:
+				parent.connections.erase(d)
+		
+		graph_node.queue_free()
 
 
 func _on_node_in_tree_renamed(node):
