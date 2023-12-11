@@ -12,6 +12,12 @@ var is_hover: bool
 var hover_is_right: bool
 var current_state: int
 
+func _input(event):
+	if Engine.is_editor_hint():
+		if mouse_is_in(event):
+			gui_input.emit(event)
+
+
 func _draw():
 	var font = get_theme_font("font")
 	var str_size = font.get_string_size(comp_name, HORIZONTAL_ALIGNMENT_CENTER)
@@ -31,20 +37,13 @@ func _on_dragged(_from, to):
 	associated_component.position_offset = to
 
 
+func _on_gui_input(event):
+	print(event)
+
+
+## Override
 func draw_frame(size):
-	var radius
-	if size.x >= size.y:
-		radius = size.x
-	else:
-		radius = size.y
-	radius /= 2
-	radius += get_theme_constant("border_margin", THEME_TYPE)
-	if get_parent() is GraphEdit:
-		radius *= get_parent().zoom
-	
-	draw_circle(Vector2.ZERO, radius, get_theme_color("frame", THEME_TYPE))
-	
-	draw_arc(Vector2.ZERO, radius, 0, 2 * PI, 32, get_border_color(), get_theme_constant("border_width", THEME_TYPE))
+	pass
 
 
 func get_border_color():
@@ -52,6 +51,11 @@ func get_border_color():
 		return get_theme_color("border_selected", THEME_TYPE)
 	else:
 		return get_theme_color("border", THEME_TYPE)
+
+
+## Override
+func mouse_is_in(_e: InputEvent)-> bool:
+	return false
 
 
 func set_associated_component(node):

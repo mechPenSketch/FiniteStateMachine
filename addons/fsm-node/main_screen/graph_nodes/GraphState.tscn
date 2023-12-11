@@ -1,10 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://c3ny58o1u0vsd"]
 
 [ext_resource type="Theme" uid="uid://dv06apwvadkn1" path="res://addons/fsm-node/main_screen/graph_nodes/StateTheme.tres" id="1"]
-[ext_resource type="Script" path="res://addons/fsm-node/main_screen/graph_nodes/comp_graph_element.gd" id="2_wdwl8"]
+[ext_resource type="Script" path="res://addons/fsm-node/main_screen/graph_nodes/state.gd" id="2_bj5n7"]
 
 [node name="State" type="GraphElement"]
 theme = ExtResource("1")
-script = ExtResource("2_wdwl8")
+script = ExtResource("2_bj5n7")
 
 [connection signal="dragged" from="." to="." method="_on_dragged"]
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

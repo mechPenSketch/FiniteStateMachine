@@ -8,3 +8,4 @@ theme = ExtResource("1")
 script = ExtResource("2_jnkw0")
 
 [connection signal="dragged" from="." to="." method="_on_dragged"]
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
