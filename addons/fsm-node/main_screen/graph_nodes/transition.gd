@@ -13,15 +13,18 @@ func _has_point(point)-> bool:
 	var mouse_posy = point.y
 	
 	if mouse_posx > leftest and mouse_posx < rightest:
-		is_hover = mouse_posx <= left or mouse_posx >= right
-		if is_hover:
-			hover_is_right = mouse_posx > 0
+		hover_over_connection = mouse_posx <= left or mouse_posx >= right
+		
+		if hover_over_connection:
+			connection_is_right = mouse_posx > 0
 			var pos_from_cor = abs(point) - Vector2(right, 0)
 			var opp_y = down - pos_from_cor.y
-			is_hover = pos_from_cor.y < down and opp_y > pos_from_cor.x
+			hover_over_connection = pos_from_cor.y < down and opp_y > pos_from_cor.x
 			return false
+		
 		else:
 			return mouse_posy > up and mouse_posy < down
+	
 	else:
 		return false
 

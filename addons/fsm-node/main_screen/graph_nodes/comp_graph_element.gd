@@ -8,11 +8,22 @@ var associated_component: FSM_Component
 var comp_name: String
 var is_inherited: bool
 
-var is_hover: bool
-var hover_is_right: bool
+var hover_over_connection: bool
+var connection_is_right: bool
 var current_state: int
 
 var dragg_offset: Vector2
+
+func _input(event):
+	if event is InputEventMouseButton and event.is_pressed():
+		match event.get_button_index():
+			MOUSE_BUTTON_LEFT:
+				if hover_over_connection:
+					if connection_is_right:
+						print("r")
+					else:
+						print("L")
+
 
 func _draw():
 	var font = get_theme_font("font")
@@ -31,10 +42,6 @@ func _draw():
 
 func _on_dragged(_from, to):
 	associated_component.position_offset = to
-
-
-func _gui_input(event):
-	print(event)
 
 
 ## Override
@@ -63,8 +70,8 @@ func set_comp_name(val):
 
 
 func set_hover(b: bool):
-	is_hover = b
+	hover_over_connection = b
 
 
-func set_hover_is_right(b: bool):
-	hover_is_right = b
+func set_connection_is_right(b: bool):
+	connection_is_right = b

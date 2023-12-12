@@ -4,13 +4,18 @@ extends CompGraphElement
 var radius_sqaured: float
 
 func _has_point(point)-> bool:
-	var length_thrice_squared = point.x * 3
-	length_thrice_squared **= 2
-	is_hover = length_thrice_squared > radius_sqaured
+	if point.distance_squared_to(Vector2()) <= radius_sqaured:
+		var length_thrice_squared = point.x * 3
+		length_thrice_squared **= 2
+		hover_over_connection = length_thrice_squared > radius_sqaured
+
+		connection_is_right = point.x > 0
+		
+		return !hover_over_connection
 	
-	hover_is_right = point.x > 0
-	
-	return !is_hover and point.distance_squared_to(Vector2()) <= radius_sqaured
+	else:
+		hover_over_connection = false
+		return false
 
 
 func draw_frame(size):
