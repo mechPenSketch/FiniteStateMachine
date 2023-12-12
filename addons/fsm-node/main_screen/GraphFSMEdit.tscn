@@ -9,6 +9,7 @@ right_disconnects = true
 connection_lines_thickness = 3.0
 show_arrange_button = false
 script = ExtResource("1")
+line_color = Color(0.611765, 0.368627, 0.964706, 1)
 
 [connection signal="connection_request" from="." to="." method="_on_connection_request"]
 [connection signal="disconnection_request" from="." to="." method="_on_disconnection_request"]
