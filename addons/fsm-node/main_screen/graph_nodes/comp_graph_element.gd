@@ -12,11 +12,7 @@ var is_hover: bool
 var hover_is_right: bool
 var current_state: int
 
-func _input(event):
-	if Engine.is_editor_hint():
-		if mouse_is_in(event):
-			gui_input.emit(event)
-
+var dragg_offset: Vector2
 
 func _draw():
 	var font = get_theme_font("font")
@@ -37,14 +33,14 @@ func _on_dragged(_from, to):
 	associated_component.position_offset = to
 
 
-func _on_gui_input(event):
-	if event is InputEventMouseButton:
-		match event.get_button_index():
-			MOUSE_BUTTON_LEFT:
-				if is_hover:
-					pass
-				else:
-					set_selected(true)
+func _gui_input(event):
+	if get_parent() is GraphEdit:
+		if event is InputEventMouseButton:
+			
+			match event.get_button_index():
+				MOUSE_BUTTON_LEFT:
+					if is_hover:
+						pass
 
 
 ## Override
@@ -57,11 +53,6 @@ func get_border_color():
 		return get_theme_color("border_selected", THEME_TYPE)
 	else:
 		return get_theme_color("border", THEME_TYPE)
-
-
-## Override
-func mouse_is_in(_e: InputEvent)-> bool:
-	return false
 
 
 func set_associated_component(node):
