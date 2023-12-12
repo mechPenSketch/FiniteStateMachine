@@ -38,7 +38,13 @@ func _on_dragged(_from, to):
 
 
 func _on_gui_input(event):
-	print(event)
+	if event is InputEventMouseButton:
+		match event.get_button_index():
+			MOUSE_BUTTON_LEFT:
+				if is_hover:
+					pass
+				else:
+					set_selected(true)
 
 
 ## Override
