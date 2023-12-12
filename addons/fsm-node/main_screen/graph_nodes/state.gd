@@ -3,19 +3,14 @@ extends CompGraphElement
 
 var radius_sqaured: float
 
-func _gui_input(event):
-	var length_thrice_squared = event.get_position().x - get_global_position().x
-	length_thrice_squared *= 3
+func _has_point(point)-> bool:
+	var length_thrice_squared = point.x * 3
 	length_thrice_squared **= 2
 	is_hover = length_thrice_squared > radius_sqaured
 	
-	hover_is_right = event.get_position().x > get_global_position().x
+	hover_is_right = point.x > 0
 	
-	super._gui_input(event)
-
-
-func _has_point(point)-> bool:
-	return point.distance_squared_to(Vector2()) <= radius_sqaured
+	return !is_hover and point.distance_squared_to(Vector2()) <= radius_sqaured
 
 
 func draw_frame(size):

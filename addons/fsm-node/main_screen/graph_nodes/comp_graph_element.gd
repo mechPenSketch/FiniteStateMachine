@@ -34,13 +34,7 @@ func _on_dragged(_from, to):
 
 
 func _gui_input(event):
-	if get_parent() is GraphEdit:
-		if event is InputEventMouseButton:
-			
-			match event.get_button_index():
-				MOUSE_BUTTON_LEFT:
-					if is_hover:
-						pass
+	print(event)
 
 
 ## Override
