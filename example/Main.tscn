@@ -182,32 +182,32 @@ script = ExtResource("2")
 [node name="Stop" type="Node" parent="TrafficLight/FSM" node_paths=PackedStringArray("transitions")]
 script = ExtResource("3")
 transitions = [NodePath("../ToGo")]
-graph_offset = Vector2(180, 120)
+graph_offset = Vector2(160, 140)
 
 [node name="Wait" type="Node" parent="TrafficLight/FSM" node_paths=PackedStringArray("transitions")]
 script = ExtResource("3")
 transitions = [NodePath("../ToStop")]
-graph_offset = Vector2(320, 660)
+graph_offset = Vector2(300, 420)
 
 [node name="Go" type="Node" parent="TrafficLight/FSM" node_paths=PackedStringArray("transitions")]
 script = ExtResource("3")
 transitions = [NodePath("../ToWait")]
-graph_offset = Vector2(760, 220)
+graph_offset = Vector2(560, 140)
 
 [node name="ToGo" type="Node" parent="TrafficLight/FSM" node_paths=PackedStringArray("target_state")]
 script = ExtResource("11")
 target_state = NodePath("../Go")
-graph_offset = Vector2(440, 160)
+graph_offset = Vector2(380, 80)
 
 [node name="ToWait" type="Node" parent="TrafficLight/FSM" node_paths=PackedStringArray("target_state")]
 script = ExtResource("11")
 target_state = NodePath("../Wait")
-graph_offset = Vector2(1000, 340)
+graph_offset = Vector2(640, 340)
 
 [node name="ToStop" type="Node" parent="TrafficLight/FSM" node_paths=PackedStringArray("target_state")]
 script = ExtResource("11")
 target_state = NodePath("../Stop")
-graph_offset = Vector2(40, 400)
+graph_offset = Vector2(40, 300)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TrafficLight"]
 libraries = {

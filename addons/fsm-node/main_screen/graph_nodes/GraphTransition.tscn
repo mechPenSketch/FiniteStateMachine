@@ -7,4 +7,4 @@
 theme = ExtResource("1")
 script = ExtResource("2_jnkw0")
 
-[connection signal="dragged" from="." to="." method="_on_dragged"]
+[connection signal="position_offset_changed" from="." to="." method="_on_position_offset_changed"]

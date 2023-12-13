@@ -40,8 +40,8 @@ func _draw():
 	draw_string(font, str_pos, comp_name, HORIZONTAL_ALIGNMENT_CENTER, -1, 16, font_color)
 
 
-func _on_dragged(_from, to):
-	associated_component.position_offset = to
+func _on_position_offset_changed():
+	associated_component.graph_offset = position_offset
 
 
 ## Override
