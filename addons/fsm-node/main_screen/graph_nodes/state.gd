@@ -29,8 +29,11 @@ func draw_frame(size):
 	if get_parent() is GraphEdit:
 		radius *= get_parent().zoom
 	
+	get_material().set_shader_parameter("diameter", radius * 2)
+	get_material().set_shader_parameter("left", -radius)
+	
 	radius_sqaured = radius ** 2
 	
-	draw_circle(Vector2.ZERO, radius, get_theme_color("frame", THEME_TYPE))
+	draw_circle(Vector2.ZERO, radius, Color.BLACK)
 	
 	draw_arc(Vector2.ZERO, radius, 0, 2 * PI, 32, get_border_color(), get_theme_constant("border_width", THEME_TYPE))

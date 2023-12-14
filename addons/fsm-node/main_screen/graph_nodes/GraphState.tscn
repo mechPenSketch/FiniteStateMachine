@@ -1,9 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://c3ny58o1u0vsd"]
+[gd_scene load_steps=7 format=3 uid="uid://c3ny58o1u0vsd"]
 
 [ext_resource type="Theme" uid="uid://dv06apwvadkn1" path="res://addons/fsm-node/main_screen/graph_nodes/StateTheme.tres" id="1"]
+[ext_resource type="Shader" path="res://addons/fsm-node/main_screen/graph_nodes/state.gdshader" id="1_ufuwj"]
 [ext_resource type="Script" path="res://addons/fsm-node/main_screen/graph_nodes/state.gd" id="2_bj5n7"]
 
+[sub_resource type="Gradient" id="Gradient_15she"]
+offsets = PackedFloat32Array(0.66, 1)
+colors = PackedColorArray(0.466667, 0.192157, 0.356863, 1, 0.913725, 0.403922, 0.713726, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tuail"]
+gradient = SubResource("Gradient_15she")
+width = 1024
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2gyat"]
+resource_local_to_scene = true
+shader = ExtResource("1_ufuwj")
+shader_parameter/hover = false
+shader_parameter/left = null
+shader_parameter/diameter = null
+shader_parameter/is_right = false
+shader_parameter/gradient = SubResource("GradientTexture1D_tuail")
+
 [node name="State" type="GraphElement"]
+material = SubResource("ShaderMaterial_2gyat")
 theme = ExtResource("1")
 script = ExtResource("2_bj5n7")
 

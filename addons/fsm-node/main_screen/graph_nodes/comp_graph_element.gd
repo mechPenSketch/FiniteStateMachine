@@ -8,8 +8,16 @@ var associated_component: FSM_Component
 var comp_name: String
 var is_inherited: bool
 
-var hover_over_connection: bool
-var connection_is_right: bool
+var hover_over_connection: bool:
+	set(val):
+		get_material().set_shader_parameter("hover", val)
+		hover_over_connection = val
+
+var connection_is_right: bool:
+	set(val):
+		get_material().set_shader_parameter("is_right", val)
+		connection_is_right = val
+
 var current_state: int
 
 var dragg_offset: Vector2
