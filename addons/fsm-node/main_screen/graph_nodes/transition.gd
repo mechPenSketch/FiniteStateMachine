@@ -27,11 +27,13 @@ func _has_point(point)-> bool:
 		
 		if final_hover:
 			connection_is_right = mouse_posx > 0
+			
 			var pos_from_cor = abs(point) - Vector2(right, 0)
 			var opp_y = down - pos_from_cor.y
 			final_hover = pos_from_cor.y < down and opp_y > pos_from_cor.x
+			
 			hover_over_connection = final_hover
-			return false
+			return hover_over_connection
 		
 		else:
 			hover_over_connection = final_hover

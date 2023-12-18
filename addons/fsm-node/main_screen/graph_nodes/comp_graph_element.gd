@@ -22,17 +22,6 @@ var current_state: int
 
 var dragg_offset: Vector2
 
-func _input(event):
-	if event is InputEventMouseButton and event.is_pressed():
-		match event.get_button_index():
-			MOUSE_BUTTON_LEFT:
-				if hover_over_connection:
-					if connection_is_right:
-						print("r")
-					else:
-						print("L")
-
-
 func _draw():
 	var font = get_theme_font("font")
 	var str_size = font.get_string_size(comp_name, HORIZONTAL_ALIGNMENT_CENTER)
@@ -46,6 +35,15 @@ func _draw():
 	else:
 		font_color = Color.WHITE
 	draw_string(font, str_pos, comp_name, HORIZONTAL_ALIGNMENT_CENTER, -1, 16, font_color)
+
+
+func _gui_input(event):
+	if get_parent() is GraphEdit and event is InputEventMouseButton and event.is_pressed():
+		match event.get_button_index():
+			MOUSE_BUTTON_LEFT:
+				if hover_over_connection:
+					get_parent().start_pending_connection(self, connection_is_right)
+					accept_event()
 
 
 func _on_position_offset_changed():

@@ -11,7 +11,7 @@ func _has_point(point)-> bool:
 
 		connection_is_right = point.x > 0
 		
-		return !hover_over_connection
+		return true
 	
 	else:
 		hover_over_connection = false

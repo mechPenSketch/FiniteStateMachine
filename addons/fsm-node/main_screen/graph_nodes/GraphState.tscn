@@ -16,8 +16,8 @@ width = 1024
 resource_local_to_scene = true
 shader = ExtResource("1_ufuwj")
 shader_parameter/hover = false
-shader_parameter/left = null
-shader_parameter/diameter = null
+shader_parameter/left = -10.0
+shader_parameter/diameter = 20.0
 shader_parameter/is_right = false
 shader_parameter/gradient = SubResource("GradientTexture1D_tuail")
 

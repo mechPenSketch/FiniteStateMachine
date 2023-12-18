@@ -1,20 +1,62 @@
 @tool
 extends GraphEdit
 
+const CONNECT_COMP := "graph_comp"
+const CONNECT_ISFFROM := "is_from"
+const CONNECT_SNAP := "snap"
+
 @export_group("Connection Lines")
 @export_color_no_alpha var line_color: Color
 
 var associated_fsm: FSM
 
 var comp_connections = []
+var pending_connection = {}
 
 func _draw():
-	
 	for c in comp_connections:
 		var from = c["from"].position_offset * zoom - scroll_offset
 		var to = c["to"].position_offset * zoom - scroll_offset
 		
 		draw_line(from, to, line_color, get_connection_lines_thickness())
+	
+	if pending_connection:
+		var target_pos: Vector2
+		if CONNECT_SNAP in pending_connection and pending_connection[CONNECT_SNAP]:
+			target_pos = pending_connection[CONNECT_SNAP].get_position()
+		else:
+			target_pos = get_local_mouse_position()
+		
+		var from_pos: Vector2
+		var to_pos: Vector2
+		
+		if pending_connection[CONNECT_ISFFROM]:
+			from_pos = pending_connection[CONNECT_COMP].position_offset * zoom - scroll_offset
+			to_pos = target_pos
+		else:
+			from_pos = target_pos
+			to_pos = pending_connection[CONNECT_COMP].position_offset * zoom - scroll_offset
+		
+		draw_line(from_pos, to_pos, line_color, get_connection_lines_thickness())
+
+
+func _gui_input(event):
+	if pending_connection:
+		if event is InputEventMouseButton:
+			if event.is_released() and event.get_button_index() == MOUSE_BUTTON_LEFT:
+				pending_connection.clear()
+				queue_redraw()
+		
+		elif event is InputEventMouseMotion:
+			if pending_connection:
+				for c in get_children():
+					if c != pending_connection[CONNECT_COMP] and c._has_point(event.get_position() - c.position_offset):
+						pending_connection[CONNECT_SNAP] = c
+						queue_redraw()
+						return
+				
+				pending_connection[CONNECT_SNAP] = null
+				queue_redraw()
 
 
 func _on_connection_request(str_from, from_port, str_to, to_port):
@@ -36,6 +78,7 @@ func _on_connection_request(str_from, from_port, str_to, to_port):
 				
 				# Update property list
 				nd_from.notify_property_list_changed()
+			
 		elif nd_from is Transition and nd_to is State:
 			# Transition to State
 			
@@ -97,3 +140,10 @@ func connect_comp_nodes(connections: Array):
 
 func set_associated_fsm(node):
 	associated_fsm = node
+
+
+func start_pending_connection(graph_ele: GraphElement, is_to: bool):
+	pending_connection = {
+			CONNECT_COMP: graph_ele,
+			CONNECT_ISFFROM: is_to,
+		}
