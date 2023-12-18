@@ -1,5 +1,5 @@
 @tool
-extends CompGraphElement
+class_name GraphTransition extends CompGraphElement
 
 var left: float:
 	set(val):
