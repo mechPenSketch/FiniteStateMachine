@@ -119,6 +119,21 @@ func connect_comp_nodes(connections: Array):
 		comp_connections.append(dict)
 
 
+func remove_comp_from_connections(g:CompGraphElement, is_from:bool):
+	var key_side: String
+	if is_from:
+		key_side = CONNECT_FROM
+	else:
+		key_side = CONNECT_TO
+	
+	for c in comp_connections:
+		if c[key_side] == g:
+			comp_connections.erase(c)
+			break
+	
+	queue_redraw()
+
+
 func remove_connection(dict):
 	var from_comp = dict[CONNECT_FROM].associated_component
 	var to_comp = dict[CONNECT_TO].associated_component
@@ -135,9 +150,20 @@ func set_associated_fsm(node):
 	associated_fsm = node
 
 
-func start_pending_connection(graph_ele: GraphElement, is_from: bool):
+func start_pending_connection(graph_ele: CompGraphElement, is_from: bool):
 	pending_connection = {
 			PCONNECT_COMP: graph_ele,
 			PCONNECT_ISFROM: is_from,
 			PCONNECT_SNAP: null,
 		}
+
+
+func start_pending_connection_from_disconnecting_right(graph_ele: GraphElement):
+	for c in comp_connections:
+		if c[CONNECT_FROM] == graph_ele:
+			remove_connection(c)
+			start_pending_connection(c[CONNECT_TO], false)
+			queue_redraw()
+			return
+	
+	start_pending_connection(graph_ele, true)

@@ -42,8 +42,16 @@ func _gui_input(event):
 		match event.get_button_index():
 			MOUSE_BUTTON_LEFT:
 				if hover_over_connection:
-					get_parent().start_pending_connection(self, connection_is_right)
+					if get_parent().is_right_disconnects_enabled() and connection_is_right:
+						get_parent().start_pending_connection_from_disconnecting_right(self)
+					else:
+						get_parent().start_pending_connection(self, connection_is_right)
+					
 					accept_event()
+			
+			MOUSE_BUTTON_RIGHT:
+				if hover_over_connection:
+					get_parent().remove_comp_from_connections(self, connection_is_right)
 
 
 func _on_position_offset_changed():
