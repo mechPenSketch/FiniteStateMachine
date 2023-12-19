@@ -49,9 +49,9 @@ func _gui_input(event):
 					
 					accept_event()
 			
-			MOUSE_BUTTON_RIGHT:
-				if hover_over_connection:
-					get_parent().remove_comp_from_connections(self, connection_is_right)
+			#MOUSE_BUTTON_RIGHT:
+			#	if hover_over_connection:
+			#		get_parent().remove_comp_from_connections(self, connection_is_right)
 
 
 func _on_position_offset_changed():

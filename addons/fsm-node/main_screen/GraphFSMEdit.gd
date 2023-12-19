@@ -71,9 +71,7 @@ func _gui_input(event):
 					
 					add_new_connection(dict)
 				
-				else:
-					pending_connection.clear()
-				
+				pending_connection.clear()
 				queue_redraw()
 		
 		elif event is InputEventMouseMotion:
@@ -93,9 +91,11 @@ func add_new_connection(dict):
 	var to_comp = dict[CONNECT_TO].associated_component
 	
 	if from_comp is State:
-		from_comp.transitions.apend(to_comp)
+		from_comp.transitions.append(to_comp)
 	else:
 		from_comp.target_state = to_comp
+	
+	from_comp.notify_property_list_changed()
 	
 	comp_connections.append(dict)
 
@@ -142,6 +142,8 @@ func remove_connection(dict):
 		from_comp.transitions.erase(to_comp)
 	else:
 		from_comp.target_state = null
+	
+	from_comp.notify_property_list_changed()
 	
 	comp_connections.erase(dict)
 
