@@ -1,6 +1,7 @@
 @tool
 extends EditorPlugin
 
+var editor_interface
 var editor_selection
 
 var scenedock_tree
@@ -35,15 +36,16 @@ var select_state:bool = true
 var select_transition:bool = true
 
 func _enter_tree():
-	editor_selection = get_editor_interface().get_selection()
+	editor_interface = get_editor_interface()
+	editor_selection = editor_interface.get_selection()
 	editor_selection.selection_changed.connect(Callable(self, "_on_selection_changed"))
 	
-	var scenedock = get_editor_interface().get_base_control().find_children("Scene", "SceneTreeDock", true, false)[0]
+	var scenedock = editor_interface.get_base_control().find_children("Scene", "SceneTreeDock", true, false)[0]
 	scenedock_tree = scenedock.find_children("*", "Tree", true, false)[0]
 	
 	# Set up Main Screen
 	main_panel_instance = MainPanel.instantiate()
-	get_editor_interface().get_editor_main_screen().add_child(main_panel_instance)
+	editor_interface.get_editor_main_screen().add_child(main_panel_instance)
 	_make_visible(false)
 	
 	# Set up Toolbars
@@ -59,9 +61,9 @@ func _enter_tree():
 	}
 	
 	#	Reuse Godot Icons
-	toolbar_btns["select"].set_button_icon(get_editor_interface().get_base_control().get_theme_icon("ToolSelect", "EditorIcons"))
-	toolbar_btns["move"].set_button_icon(get_editor_interface().get_base_control().get_theme_icon("ToolMove", "EditorIcons"))
-	toolbar_btns["remove"].set_button_icon(get_editor_interface().get_base_control().get_theme_icon("Remove", "EditorIcons"))
+	toolbar_btns["select"].set_button_icon(editor_interface.get_base_control().get_theme_icon("ToolSelect", "EditorIcons"))
+	toolbar_btns["move"].set_button_icon(editor_interface.get_base_control().get_theme_icon("ToolMove", "EditorIcons"))
+	toolbar_btns["remove"].set_button_icon(editor_interface.get_base_control().get_theme_icon("Remove", "EditorIcons"))
 	
 	#	Define Press Methods
 	toolbar_btns_pressed_methods = {
@@ -136,7 +138,7 @@ func _on_selection_changed():
 		if n is FSM:
 			parent_fsm = n
 			set_add_component_disabled(false)
-			get_editor_interface().set_main_screen_editor("FSM")
+			editor_interface.set_main_screen_editor("FSM")
 			toolbar_btns["remove"].set_disabled(true)
 			return
 		elif n is FSM_Component:
@@ -232,6 +234,7 @@ func _on_node_added_to_tree(node):
 		graph_fsm_edit_root.add_child(gfe_instance)
 		node.associated_graph_edit = gfe_instance
 		gfe_instance.set_associated_fsm(node)
+		gfe_instance.editor_interface = editor_interface
 		
 		gfe_instance.add_title_label(node.get_name())
 		

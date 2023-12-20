@@ -11,6 +11,8 @@ const PCONNECT_SNAP := "snap"
 @export_group("Connection Lines")
 @export_color_no_alpha var line_color: Color
 
+var editor_interface
+
 var associated_fsm: FSM
 
 var comp_connections = []
@@ -94,7 +96,7 @@ func add_new_connection(dict):
 		from_comp.transitions.append(to_comp)
 	else:
 		from_comp.target_state = to_comp
-	
+	editor_interface.mark_scene_as_unsaved()
 	from_comp.notify_property_list_changed()
 	
 	comp_connections.append(dict)
@@ -143,6 +145,7 @@ func remove_connection(dict):
 	else:
 		from_comp.target_state = null
 	
+	editor_interface.mark_scene_as_unsaved()
 	from_comp.notify_property_list_changed()
 	
 	comp_connections.erase(dict)
