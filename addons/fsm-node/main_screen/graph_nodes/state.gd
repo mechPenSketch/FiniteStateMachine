@@ -1,6 +1,7 @@
 @tool
 extends CompGraphElement
 
+var radius: float
 var radius_sqaured: float
 
 func _has_point(point)-> bool:
@@ -19,7 +20,6 @@ func _has_point(point)-> bool:
 
 
 func draw_frame(size):
-	var radius
 	if size.x >= size.y:
 		radius = size.x
 	else:

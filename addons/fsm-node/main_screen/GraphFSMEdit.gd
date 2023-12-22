@@ -10,6 +10,7 @@ const PCONNECT_SNAP := "snap"
 
 @export_group("Connection Lines")
 @export_color_no_alpha var line_color: Color
+@export var arrow_head: Texture2D
 
 var editor_interface
 
@@ -20,10 +21,23 @@ var pending_connection = {}
 
 func _draw():
 	for c in comp_connections:
-		var from = c[CONNECT_FROM].position_offset * zoom - scroll_offset
+		var from_graph = c[CONNECT_FROM]
+		
+		var from = from_graph.position_offset * zoom - scroll_offset
 		var to = c[CONNECT_TO].position_offset * zoom - scroll_offset
 		
 		draw_line(from, to, line_color, get_connection_lines_thickness())
+		
+		# For drawing arrowhead, rotation from offset required
+		"""
+		if from_graph is GraphTransition:
+			var arrow_pos = to
+			arrow_pos -= arrow_head.get_size() / 2
+			var angle = from.angle_to_point(to)
+			var backtrack = c[CONNECT_TO].radius + arrow_head.get_width() / 2
+			arrow_pos -= Vector2(backtrack, 0).rotated(angle)
+			draw_texture(arrow_head, arrow_pos, line_color)
+		"""
 	
 	if pending_connection:
 		var target_pos: Vector2

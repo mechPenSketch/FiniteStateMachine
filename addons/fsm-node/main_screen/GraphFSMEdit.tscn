@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dwekksm82g71h"]
+[gd_scene load_steps=3 format=3 uid="uid://dwekksm82g71h"]
 
 [ext_resource type="Script" path="res://addons/fsm-node/main_screen/GraphFSMEdit.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://clbcsw6asfgwl" path="res://addons/fsm-node/main_screen/arrow_head.svg" id="2_vr011"]
 
 [node name="GraphFSMEdit" type="GraphEdit"]
 size_flags_horizontal = 3
@@ -10,3 +11,4 @@ connection_lines_thickness = 3.0
 show_arrange_button = false
 script = ExtResource("1")
 line_color = Color(0.611765, 0.368627, 0.964706, 1)
+arrow_head = ExtResource("2_vr011")
