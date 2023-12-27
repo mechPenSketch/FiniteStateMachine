@@ -28,7 +28,7 @@ func _draw():
 		
 		draw_line(from, to, line_color, get_connection_lines_thickness())
 		
-		# For drawing arrowhead, rotation from offset required
+		# For drawing arrowhead, rotation from offset is required
 		"""
 		if from_graph is GraphTransition:
 			var arrow_pos = to

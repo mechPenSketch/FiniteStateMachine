@@ -81,6 +81,11 @@ func activate_state(s):
 	current_state.set_active(true)
 
 
+func add_connection(c: Dictionary):
+	if not c in connections:
+		connections.append(c)
+
+
 ## Changes from one state to another.
 func change_state(s):
 	deactivate_state()

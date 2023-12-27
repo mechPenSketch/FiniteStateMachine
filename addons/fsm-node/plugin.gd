@@ -264,11 +264,11 @@ func _on_node_added_to_tree(node):
 			if is_state:
 				if node.transitions:
 					for t in node.transitions:
-						parent.connections += [{"from": node, "to": t}]
+						parent.add_connection({"from": node, "to": t})
 				
 			else:
 				if node.target_state:
-					parent.connections += [{"from": node, "to": node.target_state}]
+					parent.add_connection({"from": node, "to": node.target_state})
 			
 			# Inheritance
 			var node_path_array = get_nodepath_in_array(node)
