@@ -29,15 +29,12 @@ func _draw():
 		draw_line(from, to, line_color, get_connection_lines_thickness())
 		
 		# For drawing arrowhead, rotation from offset is required
-		"""
 		if from_graph is GraphTransition:
 			var arrow_pos = to
-			arrow_pos -= arrow_head.get_size() / 2
 			var angle = from.angle_to_point(to)
-			var backtrack = c[CONNECT_TO].radius + arrow_head.get_width() / 2
+			var backtrack = c[CONNECT_TO].radius
 			arrow_pos -= Vector2(backtrack, 0).rotated(angle)
-			draw_texture(arrow_head, arrow_pos, line_color)
-		"""
+			draw_arrowhead(arrow_pos, angle)
 	
 	if pending_connection:
 		var target_pos: Vector2
@@ -133,6 +130,14 @@ func connect_comp_nodes(connections: Array):
 			}
 		
 		comp_connections.append(dict)
+
+
+func draw_arrowhead(pos: Vector2, angle: float):
+	var offset = arrow_head.get_size() * Vector2(1, 0.5)
+	var final_pos = pos - offset.rotated(angle)
+	draw_set_transform(final_pos, angle, Vector2.ONE)
+	draw_texture(arrow_head, Vector2.ZERO, line_color)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 func remove_comp_from_connections(g:CompGraphElement, is_from:bool):
