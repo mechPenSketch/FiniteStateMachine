@@ -1,5 +1,5 @@
 @tool
-extends CompGraphElement
+class_name GraphState extends CompGraphElement
 
 var radius: float
 var radius_sqaured: float

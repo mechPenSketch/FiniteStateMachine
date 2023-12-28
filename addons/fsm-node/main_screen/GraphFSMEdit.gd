@@ -54,6 +54,15 @@ func _draw():
 			to_pos = pending_connection[PCONNECT_COMP].position_offset * zoom - scroll_offset
 		
 		draw_line(from_pos, to_pos, line_color, get_connection_lines_thickness())
+		
+		if pending_connection[PCONNECT_ISFROM]:
+			if pending_connection[PCONNECT_COMP] is GraphTransition:
+				draw_arrowhead(to_pos, from_pos.angle_to_point(to_pos))
+		else:
+			if pending_connection[PCONNECT_COMP] is GraphState:
+				var angle = from_pos.angle_to_point(to_pos)
+				var pos = to_pos - Vector2(pending_connection[PCONNECT_COMP].radius, 0).rotated(angle)
+				draw_arrowhead(pos, angle)
 
 
 func _gui_input(event):
